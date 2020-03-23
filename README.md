@@ -1,27 +1,25 @@
 # covid19
-<p>He estado buscando en alguna app que de manera pr&aacute;ctica pueda ayudar a controlar esta pandemia, pero a la verdad no la he encontrado, solo app que llevan un registro de las estad&iacute;sticas. He escrito y dise&ntilde;ado las primeras ideas de una app que contribuya de manera pr&aacute;ctica. Nunca he desarrollado una app Android y no creo que haya tiempo para aprender en este momento. Por eso recurro a esta comunidad con esta idea y si les parece buena que pongamos manos a la obra. Seguidamente las principales ideas.</p>
+<p style="text-align: justify;">I have been looking for an app that in a practical way can help control this pandemic, but truly I have not found it, only apps that keep a record of the statistics. I have written and designed the first ideas of one app that can contribute in a practical way. I have never developed an Android app and I don't think there is time to learn right now. So I turn to this community with this idea and if you think is a good idea then we get down to work.</p>
+<p>The main ideas:</p>
 <ul>
-<li>La app llevar&aacute; un registro de por donde ha caminado la persona creando ficheros locales por cada d&iacute;a en un m&aacute;ximo de 15 0 20 d&iacute;as, borrando siempre los m&aacute;s antiguos.
+<li>The app will keep track of where the person has walked creating local files for each day in a maximum of 15 or 20 days, always deleting the oldest.</li>
+</ul>
+<p style="padding-left: 60px;">o This implies that the location service must always be activated on the phone.</p>
 <ul>
-<li>Esto implica que siempre debe estar activado el servicio de localizaci&oacute;n en el tlf.</li>
+<li>If a person is diagnosed with COVID19 +, he will press a button that will upload the routes he has traveled on to the server.</li>
 </ul>
-</li>
-<li>Si una persona es diagnosticada COVID19+ este presionar&aacute; un bot&oacute;n que se encargara de subir al servidor las rutas por las que ha transitado.
+<p style="padding-left: 60px;">o The server will notify these routes to everyone in the same city of the latest covid19+ cases.</p>
+<p style="padding-left: 60px;">o Locally in each mobile, a local algorithm will be executed that will analyze the routes by which the user has walked with those received from the server.</p>
+<p style="padding-left: 60px;">o In case of coincidence in any sections, the algorithm will notify the owner that he has traveled through an unsafe route that must be quarantined.</p>
 <ul>
-<li>El servidor notificar&aacute; estas rutas a todo el que la tenga instalada.</li>
-<li>Localmente en cada m&oacute;vil se ejecutar&aacute; un algoritmo local que analizar&aacute; las rutas por las que el usuario ha caminado con las recibidas del servidor.</li>
-<li>En caso de coincidencia en tramos el algoritmo le notificar&aacute; al due&ntilde;o que ha transitado por una ruta insegura que debe ponerse en cuarentena.</li>
+<li>The app will always be running in the background, displaying the user's position and highlighting the risk routes in red and sounding an alarm when the user enters a risk route</li>
+<li>The app will also emit an alarm if the person is less than 3 meters away from another person who has the app installed.</li>
+<li>The app will display in its interface messages in the form of images and videos of tips to avoid contracting or spreading the virus.</li>
+<li>It will have a graph of local cases.</li>
+<li>You will have the option to call 911 or an emergency phone in case your symptoms worsen.</li>
+<li>You will have direct access to the phone number for the food supply bank if one exists locally.</li>
+<li>It will have a media library with instructional videos of symptoms and elements that help to understand the disease and how to avoid contagion.</li>
+<li>The user will be able to keep track of their symptoms and compare how serious their condition is.</li>
+<li>No personal data will be necessary, the personal configuration will be minimal such as the home address so that when notifying a COVID + the server can notify all those who live near or in the same building o neighborhood.</li>
+<li>The app must be able to be translated into several languages ​​and all the analysis of the routes will be done locally so as not to load the server. The user only will receive routes of the same city o the city where he is leading into.</li>
 </ul>
-</li>
-<li>La app estar&aacute; siempre corriendo en el fondo, visualizando la posici&oacute;n del usuario y resaltando en rojo las rutas de riesgo y sonando una alarma cuando el usuario entre en una ruta de riesgo.</li>
-<li>La app tambi&eacute;n emitir&aacute; una alarma la persona est&eacute; a una distancia menos de 3 metros de otra persona que tenga instalada la app.</li>
-<li>La app mostrar&aacute; en su interface mensajes en formato de im&aacute;genes y videos de consejos para no contraer o esparcir el virus.</li>
-<li>Tendr&aacute; una gr&aacute;fica de los casos locales.</li>
-<li>Tendr&aacute; la opci&oacute;n de llamar al 911 o tlf de emergencia en caso de que sus s&iacute;ntomas empeoren.</li>
-<li>Tendr&aacute; un acceso directo al tlf del banco de provisiones de alimentos en caso que exista uno localmente.</li>
-<li>Tendr&aacute; una mediateca con videos instructivos de s&iacute;ntomas y elementos que ayuden al conocimiento de la enfermedad y como evitar el contagio.</li>
-<li>El usuario podr&aacute; llevar un registro de sus s&iacute;ntomas y comparar cuan grave es su estado.</li>
-<li>No ser&aacute; necesario datos personales, la configuraci&oacute;n personal ser&aacute; m&iacute;nima como puede ser la direcci&oacute;n del hogar para que al notificar un COVID+ el servidor pueda notificar a todos aquellos que viven cerca o en el mismo edificio.</li>
-<li>La app debe poder traducirse a varios idiomas y todo el an&aacute;lisis de las rutas se har&aacute; localmente para no cargar el servidor.</li>
-</ul>
-<p>VER LAS PROPUESTAS DE DISE&Ntilde;O DE LAS P&Aacute;GINAS</p>
