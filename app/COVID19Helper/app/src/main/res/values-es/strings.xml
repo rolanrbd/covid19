@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="btnUpdateSymptom" translatable="false">Actualizar mis Síntomas</string>
+    <string name="btnNotifyCOVID19_string">Notificar</string>
+    <string name="btnEmergency_string">Llamar a Emergencia</string>
+    <string name="txtVwSymptomTitle">Símptomas</string>
+    <string name="txtVwMild">Leves</string>
+    <string name="txtVwSevere">Severos</string>
+    <string name="txtVwDoDontTitle">¿Qué hacer y qué no hacer en cuarentena?</string>
+    <string name="txtVwDo">Debes Hacer</string>
+    <string name="txtVwDont">No Debes Hacer</string>
+    <string name="txtVwRoutesTitle">Mis Rutas Diarias</string>
+    <string name="txtVwMediaTitle">Archivos de Multimedia</string>
+    <string name="txtVwNewsTitle">Noticias</string>
+    <string name="txtVwFactsVsMythsTitle">Hechos vs Mitos</string>
+    <string name="txtVwMyths">Mitos</string>
+    <string name="txtVwFacs">Hehos</string>
+    <string name="txtVwHowToStopTitle">¿Cómo Detenerlo?</string>
+    <string name="txtVwLocalNews">Noticias Locales</string>
+    <string name="txtVwGlobalNews">Noticias Globales</string>
+    <string name="txtVwMoreNews">Más...</string>
+    <string name="txtVwNoticationsTitle">Notificaciones</string>
+    <string name="txtActionNoImplemented">¡Esta acción no se ha implementado!</string>
+    <string name="txtActionCallFoodBank">¡Parece que no configuraste un número de teléfono para esta acción!</string>
+    <string name="txtImgMapHomePage">Su posición con respecto a rutas inseguras</string>
+    <string name="txtImgChartHomePage">Casos locales, nacionales y globales de COVID19</string>
+    <string name="txtImgAdviceHomePage">Consejo al azar</string>
+    <string name="txtImgAlarmHomePage">Alarma</string>
+    <string name="txtRecordingHomePage">Grabando</string>
+    <string name="txtStopRecordHomePage">Fichero de Audio Guardado</string>
+    <string name="txtPlayAudioHomePage">Reproduciendo Fichero de Audio</string>
+    <string name="txtMSGDoNotForget">No olvides presionar el botón para confirmar tu actualización.</string>
+    <string name="btnUpdateHowToStop">Actualizar mis Acciones</string>
+    <string name="btnUpdateWhatToDo">Actualiza mis Acciones</string>
+    <string name="txtMSGKeepPress">No hay suficientes datos para guardar.   Mantenga presionado para grabar</string>
+    <string name="txtMediaHistoryTitle">Historial de Archivos de Audio</string>
+    <string name="txtFact">Hecho</string>
+    <string name="txtMyth">Mito</string>
+    <string name="txtFileDataName">FicheroDatos</string>
+</resources>

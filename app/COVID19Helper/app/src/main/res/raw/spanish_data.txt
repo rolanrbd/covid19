@@ -1,0 +1,73 @@
+dateLastUpdate;2020-03-08
+table;covid19_symptoms;rows;17
+Mild;Dolor de cabeza;0;
+Mild;Dolor de garganta;0;
+Mild;Fatiga;0;
+Mild;Fiebre;0;
+Mild;Tos;0;
+Mild;Estornudos;0;
+Mild;Respiración dificultosa;0;
+Mild;Diarrea;0;
+Mild;Pérdida de olfato;0;
+Mild;Pérdida del gusto;0;
+Severe;Dificultad severa para respirar;0;
+Severe;Dolor de pecho severo;0;
+Severe;Teniendo dificultades para despertarse;0;
+Severe;Sentirse confundido;0;
+Severe;Perdiendo la conciencia;0;
+Severe;Fiebre;0;
+Severe;Tos persistente;0;
+table;covid19_whattodo;rows;16
+Autoaislamiento durante 14 días o el número de días definido por las autoridades locales o federales;Do;;0
+Cubra su boca y nariz;Do;;0
+Cuando tosa, hágalo en la curva del codo;Do;;0
+Bebe agua caliente constantemente;Do;;0
+Beba bebidas calientes todo el tiempo, como té de orégano, té de limón, etc;Do;;0
+Solo tome paracetamol;Do;;0
+Comprueba tu temperatura sistemáticamente;Do;;0
+Prepara sopa de pollo, tómela caliente;Do;;0
+Revise sus síntomas con frecuencia;Do;;0
+Haga inhalaciones de vapor frecuentemente;Do;;0
+Corte un diente de ajo y póngalo en un recipiente y beba como agua común. Esto ayudará a fortalecer su sistema inmunológico.;Do;;0
+Cortar un limón en trozos y ponerlo en un recipiente y beber como agua común.;Do;;0
+Use gel antibacteriano (desinfectante para manos) con más del 70% de alcohol;Do;;0
+Caminar por las calles. Puede contagiar personas vulnerales;DoNot;;0
+Estar sin taparse la boca y la nariz;DoNot;;0
+Tomar o dejar de tomar, si lo necesita, ibuprofeno, aspirina, Advil o Voltaren sin consultar a su médico.;DoNot;;0
+table;covid19_facts;rows;20
+Fact;Puede ser asintomático hasta por 9 días o por todo el período de la enfermedad.
+Fact;¡Una persona sana asintomática caminando por la calle puede dejar entre 3.000 y 4.000 puntos de infección!
+Fact;Algunos jóvenes, perfectamente sanos, de repente se enferman y mueren a causa de esta enfermedad (varios casos en Francia)
+Fact;El virus es diez veces más letal en los ancianos en comparación con los de mediana edad.
+Fact;Los pacientes con enfermedad cardiovascular tienen el mayor riesgo de muerte, seguidos de diabetes, enfermedad respiratoria crónica e hipertensión.
+Fact;Los pacientes con obesidad, enfermedad cardíaca, enfermedad pulmonar y fumadores con antecedentes de enfermedad pulmonar tienen un mayor riesgo de desarrollar complicaciones relacionadas con el virus.
+Myth;El nuevo coronavirus se puede transmitir a través de productos fabricados en China.
+Fact;Aunque el virus puede permanecer en las superficies durante unas pocas horas después del contacto, la OMS dijo que es muy poco probable que persista en esa superficie después de ser movido, enviado y expuesto a diferentes condiciones y temperaturas. Para cualquier persona afectada, una superficie ha sido contaminada, la agencia de salud aconseja limpiarla con un desinfectante. Si alguien ya lo ha tocado antes de limpiarlo, debe lavarse inmediatamente las manos con un desinfectante para manos a base de alcohol o con agua y jabón.
+Myth;El clima frío y la nieve pueden matar al nuevo coronavirus.
+Fact;La OMS dijo que no hay razón para creer que el clima frío puede matar el nuevo coronavirus u otras enfermedades, de hecho. La agencia de salud dijo que las temperaturas externas o el clima no cambian la temperatura normal del cuerpo humano de alrededor de 36.5 a 37 C. Además de esto, la OMS dijo que tomar un baño caliente tampoco evitará la infección por la misma razón.
+Myth;Las mascotas pueden transmitir el nuevo coronavirus.
+Fact;Según la OMS, todavía no hay evidencia que sugiera que los animales de compañía y las mascotas, como perros o gatos, puedan infectarse con el virus. A pesar de esto, las personas siempre deben lavarse las manos con jabón después de tocar a las mascotas, ya que podrían propagar otras bacterias, como E. coli y salmonella.
+Myth;Comer ajo evitará la infección.
+Fact;Si bien puede tener algunas propiedades antimicrobianas, la OMS dijo que no hay evidencia que sugiera que comer ajo protegerá a las personas del virus.
+Myth;Las personas más jóvenes no son susceptibles a COVID-19.
+Fact;Las personas mayores y las personas con afecciones médicas preexistentes, como asma, diabetes y enfermedades cardíacas, parecen ser más vulnerables a las enfermedades causadas por el nuevo coronavirus, pero la OMS dijo que las personas de todas las edades pueden contraerlo. La agencia de salud recomienda que las personas de todas las edades tomen medidas de precaución, como lavarse las manos.
+Myth;El calor puede matar el virus.
+Fact;La OMS informa que las fuentes de calor, como los secadores de manos, no son efectivas para matar el virus. Además de eso, las lámparas ultravioleta (UV) tampoco deben usarse para esterilizar las manos u otras áreas del cuerpo.
+Myth;Los antibióticos pueden prevenir y tratar el nuevo coronavirus.
+Fact;Según la OMS, los antibióticos no funcionan contra virus, como COVID-19. Solo son efectivos para trabajar contra las bacterias y no deben usarse como un medio de prevención o tratamiento. Sin embargo, una persona que es tratada en el hospital por COVID-19 puede recibir antibióticos porque es posible una "coinfección bacteriana", dijo la agencia de salud.
+table;covid19_howtostop;rows;15
+Mantenga la distancia, mínimo de 2 metros, 3 para mayor seguridad.;0
+¿Tuviste que salir? Registre sus lugares y con quién se contactó.;0
+¿Conoces a alguien que estuvo en contacto con un COVID19 + y estuvo en contacto hace menos de 9 días? Puede que te haya afectado. Comience a observar sus síntomas, mire la opción Cómo detenerlo.;0
+Si tuvieras que salir de tu casa cuando regreses, deberías entrar sin zapatos, el virus puede sobrevivir en tus zapatos;0
+Le diagnosticaron COVID19 +: notifique a todas las personas con las que estuvo en contacto en los últimos 8-10 días. Cuanto antes comiencen a tratarse en casa, es más probable que maten el virus antes de que llegue a sus pulmones.;0
+¿Eres una persona sana? ¡Puedes ser un héroe si eres responsable y estás tomando las medidas o un villano si eres irresponsable y no has tomado precauciones! Si contrae el virus y no tiene síntomas, puede transmitirlo a varias personas que pertenecen al grupo de riesgo (abuelos, hermanos, padres, amigos, ...).;0
+¡NO bese ni toque a los niños después de haber estado fuera de casa sin lavar sus manos, cambiarse de ropa y bañarse!;0
+¡Los guantes son buenos si los usas correctamente! ¡El virus sobrevive en el látex durante mucho tiempo! ¡¡Así que ten cuidado!! ¡Puedes llevarlo en los guantes!;0
+Etás el mercado ¿el cajero usa guantes? ¡Exígeles que los cambie antes de atenderlo o que se lave las manos con gel antibacterial! Si no lo tiene, ¡déselo amablemente! Es posible que haya estado trabajando con ellos todo el día y transmitiendo inocentemente el virus.;0
+Use gel antibacterial todo el tiempo. ¡Pero la forma más efectiva es lavarse las manos correctamente con mucho jabón!;0
+Marque el área de riesgo dentro de su casa, como un espacio en la entrada de la casa y no la traspase sin tomar las medidas apropiadas.;0
+Haga la inhalación de vapor con frecuencia. Si tuviera que salir, cuando regrese a casa, inhale vapor 2 o 3 veces, lo más caliente que pueda sin lastimarse.;0
+Haga gárgaras con antibacterianos con frecuencia;0
+Si alguien cercano o conocido por usted fue positivo, no espere a que aparezcan los síntomas. Tal vez ya tienes el virus y lo estás propagando. ¡Comience a tomar medidas de inmediato!;0
+Si se encuentra en una posible cadena de infección, no se asuste, el médico personal le dirá el mejor momento para hacer el examen. Si la prueba se realiza muy temprano, puede dar resultados negativos y esto es más peligroso. ¡Comience a tomar las medidas sugeridas aquí!;0

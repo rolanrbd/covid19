@@ -1,0 +1,73 @@
+dateLastUpdate;2020-03-08
+table;covid19_symptoms;rows;17
+Mild;Headache;0;
+Mild;Sore throat;0;
+Mild;Fatigue;0;
+Mild;Fever;0;
+Mild;Cough;0;
+Mild;Sneezing;0;
+Mild;Difficulty breathing;0;
+Mild;Diarrhea;0;
+Mild;Loss of smell;0;
+Mild;Loss of taste;0;
+Severe;Severe difficulty breathing;0;
+Severe;Severe chest pain;0;
+Severe;Having hard time waking up;0;
+Severe;Feeling confused;0;
+Severe;Losing consciousness;0;
+Severe;Fever;0;
+Severe;Persisten cough;0;
+table;covid19_whattodo;rows;16
+Self-isolate for 14 days or the number of days defined by the local or federal authorities;Do;;0
+Cover your mouth and nose;Do;;0
+When coughing do so at the bend of the elbow;Do;;0
+Drink hot water constantly;Do;;0
+Drink hot beverages all the time such as oregano tea, lemon tea;Do;;0
+Just take paracetamol;Do;;0
+Check your temperature systematically;Do;;0
+Prepare chicken soup, take it hot;Do;;0
+Check your symptoms frequently;Do;;0
+Steam Inhalation frequently;Do;;0
+Cut a clove of garlic and put it in a container and drink as common water that will help strengthen your immune system;Do;;0
+Cut a lemon into pieces and put it in a container and drink as common water;Do;;0
+Use antibacterial gel (hand sanitizer) at more than 70% alcohol;Do;;0
+Walk around the streets;DoNot;;0
+Be without cover your mouth;DoNot;;0
+Take or stop taking, if you need it, Ibuprofen, Aspirin, Advil or Voltaren without consulting your physician;DoNot;;0
+table;covid19_facts;rows;20
+Fact;You may be asymptomatic for up to 9 days or the entire period of illness
+Fact;An asymptomatic healthy person walking down the street can leave between 3,000 and 4,000 points of infection!!!
+Fact;Some very young, perfectly healthy suddenly get very sick and die from this disease (Several cases in France)
+Fact;The virus is ten times higher in the elderly compared to the middle-aged.
+Fact;Patients with cardiovascular disease were at the highest risk of death, followed by diabetes, chronic respiratory disease and hypertension.
+Fact;Patients with obesity, heart disease, lung disease and smokers with a history of lung disease are heightened risk of developing complications related to the virus.
+Myth;The new coronavirus can be transmitted through products manufactured in China.
+Fact;Even though the virus can linger on surfaces for a few hours after contact, the WHO said it’s very unlikely it will persist on that surface after being moved, shipped, and exposed to different conditions and temperatures. For anyone concerned a surface has been contaminated, the health agency advises cleaning it with a disinfectant. If someone has already touched it before it’s been cleaned, they should immediately wash their hands with an alcohol-based hand rub or with soap and water.
+Myth;Cold weather and snow can kill the new coronavirus.
+Fact;The WHO said there’s no reason to believe that cold weather can kill the new coronavirus or other diseases, for that matter. The health agency said external temperatures or weather don’t change the human body’s normal temperature of around 36.5 to 37 C. In addition to this, the WHO said taking a hot bath will also not prevent infection for the same reason.
+Myth;Pets can spread the new coronavirus.
+Fact;According to the WHO, there is still no evidence to suggest that companion animals and pets, such as dogs or cats, can be infected by the virus. Despite this, people should always wash their hands with soap after touching any pets because they could spread other bacteria, such as E. coli and salmonella.
+Myth;Eating garlic will prevent infection.
+Fact;While it may have some antimicrobial properties, the WHO said there is no evidence from the current COVID-19 outbreak to suggest that eating garlic will protect people from the virus.
+Myth;Younger people are not susceptible to COVID-19.
+Fact;Older people and those with pre-existing medical conditions, such as asthma, diabetes, and heart disease, appear to be more vulnerable to illness caused by the new coronavirus, but the WHO said people of all ages can contract it. The health agency recommends that people of all ages take precautionary measures, such as washing their hands.
+Myth;Heat can kill the virus.
+Fact;The WHO advises that heat sources, such as hand dryers, are not effective at killing the virus. Further to that, ultraviolet (UV) lamps should also not be used to sterilize hands or other areas of the body.
+Myth;Antibiotics can prevent and treat the new coronavirus.
+Fact;According to the WHO, antibiotics do not work against viruses, such as COVID-19. They are only effective in working against bacteria and should not be used a means of prevention or treatment. However, someone who is treated in hospital for COVID-19 may be given antibiotics because “bacterial co-infection” is a possibility, the health agency said.
+table;covid19_howtostop;rows;15
+Keep the distance, minimum of 2 meters, 3 for more security.;0
+Did you have to go out? Register your places and who you contacted.;0
+Do you know someone who was in contact with a COVID19 + and was in contact less than 9 days ago? You may have been affected. Begin to watch your symptoms, look at the option How to Stop it.;0
+If you had to go out of your home when you come back you should go inside without shoes, the virus may survive on your shoes;0
+You were diagnosed as COVID19 +: notify all the people with whom you were in contact in the last 8-10 days. The sooner they start treating at home, the more likely they are to kill the virus before it reaches their lungs.;0
+Are you a healthy person? You can be a hero if you are responsible and you are taking the measures or a villain if you are irresponsible and you have not taken precautions !! If you contract the virus and have no symptoms, you can pass it to several people that belong to the risk group (Grandpas, brothers, fathers, friends,... ).;0
+DO NOT kiss or touch children when you were outside without, wash your hands, changing clothes and take a bath !!;0
+Gloves are good if you use them correctly !! The virus survives in the latex for a long time !! So be careful!! You can carry it in the gloves !!;0
+In the market, the cashier is wearing gloves? Demand that they change them before attending you or that washes his hands with antibacterial !! If he does not have it, kindly give it to him !! He may have been working with them all day and innocently transmitting the virus.;0
+Use antibacterial gel all the time. But the most effective way is to wash your hands correctly !!;0
+Mark the risk area inside your house, such as a space at the entrance of the house and do not trespass it without taking the appropriate measures.;0
+Do Steam Inhalation frequently. If you had to go out, when you get back at home do steam inhalation 2 or 3 times, as hot as you can without getting hurt yourself;0
+Gargle with antibacterial frequently;0
+If someone close or known to you was positive, don't wait for symptoms to appear. Maybe you already got the virus and are spreading it. Start taking action right away!;0
+If you are in a possible chain of infection, do not panic, the personal doctor will tell you the best time to do the exam. If the test is done very early it can give negative and this is more dangerous. Start taking the measures suggested here !!;0

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#6200EE</color>
+    <color name="colorPrimaryDark">#3700B3</color>
+    <color name="colorAccent">#03DAC5</color>
+    <color name="notifyCOVID19">#F86C40</color>
+    <color name="emergencyCall">#4CBFF3</color>
+    <color name="colorMyth">#FFF18080</color>
+    <color name="colorFact">#E8F478</color>
+    <color name="colorFactVsMythDef">#EAEAE8</color>
+</resources>

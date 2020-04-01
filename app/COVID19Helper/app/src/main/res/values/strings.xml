@@ -1,0 +1,40 @@
+<resources>
+    <string name="app_name" translatable="false">COVID19 Helper</string>
+    <string name="btnNotifyCOVID19_string">Notify</string>
+    <string name="btnEmergency_string">Call Emergency</string>
+    <string name="txtVwSymptomTitle">Symptoms</string>
+    <string name="txtVwMild">Mild</string>
+    <string name="txtVwSevere">Severe</string>
+    <string name="txtVwDoDontTitle">What to do and what not to do in quarantine?</string>
+    <string name="txtVwDo">Do</string>
+    <string name="txtVwDont">Do not</string>
+    <string name="txtVwRoutesTitle">My Daily Routes</string>
+    <string name="txtVwMediaTitle">Media</string>
+    <string name="txtVwNewsTitle">News</string>
+    <string name="txtVwFactsVsMythsTitle">Facts vs Myths</string>
+    <string name="txtVwMyths">Myths</string>
+    <string name="txtVwFacs">Facts</string>
+    <string name="txtVwHowToStopTitle">How to Stop it?</string>
+    <string name="txtVwLocalNews">Local News</string>
+    <string name="txtVwGlobalNews">Global News</string>
+    <string name="txtVwMoreNews">More...</string>
+    <string name="txtVwNoticationsTitle">Notifications</string>
+    <string name="txtActionNoImplemented">This action has not been implemented!</string>
+    <string name="txtActionCallFoodBank">It looks like you didn\'t set up a phone number for this action!</string>
+    <string name="txtImgMapHomePage">Your position regarding unsafe routes</string>
+    <string name="txtImgChartHomePage">Local, National and Global cases of COVID19</string>
+    <string name="txtImgAdviceHomePage">Random Advice</string>
+    <string name="txtImgAlarmHomePage">Alarm</string>
+    <string name="txtRecordingHomePage">Recording</string>
+    <string name="txtStopRecordHomePage">Saved Audio File</string>
+    <string name="txtPlayAudioHomePage">"Playing Audio File "</string>
+    <string name="btnUpdateSymptom">Update My Symptoms</string>
+    <string name="txtMSGDoNotForget">Do not forget to press the button to confirm your update.</string>
+    <string name="btnUpdateHowToStop">Update my Actions</string>
+    <string name="btnUpdateWhatToDo">Update What I am doing</string>
+    <string name="txtMSGKeepPress">There is not enough data to save.\n Keep press and hold to record</string>
+    <string name="txtMediaHistoryTitle">Audio File History</string>
+    <string name="txtFact">Fact</string>
+    <string name="txtMyth">Myth</string>
+    <string name="txtFileDataName">FileData</string>
+</resources>
