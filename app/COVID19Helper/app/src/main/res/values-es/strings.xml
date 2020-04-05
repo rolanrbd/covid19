@@ -37,4 +37,5 @@
     <string name="txtFact">Hecho</string>
     <string name="txtMyth">Mito</string>
     <string name="txtFileDataName">FicheroDatos</string>
+    <string name="txtShare">Compartir</string>
 </resources>

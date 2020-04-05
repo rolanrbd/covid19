@@ -16,6 +16,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.media.MediaPlayer;
 import android.media.MediaRecorder;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.view.Gravity;
@@ -30,6 +31,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.Locale;
 
@@ -41,6 +43,7 @@ public class MainActivity extends AppCompatActivity {
     private static final int RETURN_CODE_HOW_TO_STOP = 1003 ;
     private static String    DATE_CURRENT = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
     private static int       DAILY_RECORD_COUNTER = 0;
+    private static int ID_COUNTER = 0;
     private long timeStartRecord = 0;
     private  static String EMERGENCY_NUMBER = "";
     private  static String FOOD_BANK_NUMBER = "";
@@ -48,14 +51,17 @@ public class MainActivity extends AppCompatActivity {
     private ImageView imVwMap;
     private ImageView imgVwChart;
     private ImageView imgBtnFoodBank;
-
+    private ImageView imgVwAdviceViewer;
 
     private MediaRecorder audioRecorder = null;
     private String audioOutput = null;
     private ImageButton imgBtnRecord;
     private boolean permissionToRecordGranted = false;
-
     private ImageButton imgBtnSymptoms;
+
+    private ArrayList<Integer> LAST_IMG_NAME = new ArrayList<>();
+    private String[] imgListName = null;
+    private String currenIMG = "cvd19_main_view";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -108,7 +114,10 @@ public class MainActivity extends AppCompatActivity {
                 }
         });
 
+        imgVwAdviceViewer = findViewById(R.id.imgVwAdviceViewer);
+
         createDBCovid19Helper();
+        populateImagenVector();
 
         if (isDBEmpty()) {
             updateTables();
@@ -176,8 +185,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void goToActRoutesList(View vw) {
-        actionNoImpemented(vw);
-        /*
+        //actionNoImpemented(vw);
+
         Intent intRoutesList = new Intent(this, RoutesList.class);
         startActivity(intRoutesList);
          //*/
@@ -194,19 +203,19 @@ public class MainActivity extends AppCompatActivity {
     public void goToActMedia(View vw) {
         //actionNoImpemented(vw);
 
-        Intent intMedia = new Intent(this, AudioHistory.class);
+        Intent intMedia = new Intent(this, Media.class);//AudioHistory.class
         startActivity(intMedia);
         //*/
     }
 
     public void goToActShare(View vw) {
-        actionNoImpemented(vw);
-        /*
+        //actionNoImpemented(vw);
+
         Intent intent = new Intent();
         intent.setAction(Intent.ACTION_SEND); //# change the type of data you need to share, # for image use "image/*"
         intent.setType("text/plain");
-        intent.putExtra(Intent.EXTRA_TEXT, URL_TO_SHARE);
-        startActivity(Intent.createChooser(intent, "Share"));
+        intent.putExtra(Intent.EXTRA_TEXT, "https://drive.google.com/drive/folders/16UYlBvUQ-Aln-IjJpE55e1VlM5EWO-2X?usp=sharing");
+        startActivity(Intent.createChooser(intent, getString(R.string.txtShare)));
         //*/
     }
 
@@ -280,6 +289,12 @@ public class MainActivity extends AppCompatActivity {
     public void callEmergency(View vw) {
         actionNoImpemented(vw);
 
+        /*
+        Uri callUri = Uri.parse("tel://911");
+        Intent callIntent = new Intent(Intent.ACTION_CALL,callUri);
+        callIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_NO_USER_ACTION);
+        startActivity(callIntent);
+         //*/
         //TOFIX
         /*
         Intent i = new Intent(Intent.ACTION_CALL);
@@ -314,11 +329,33 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void showNextAdvice(View vw) {
-        actionNoImpemented(vw);
+        //actionNoImpemented(vw);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            int idx = (int)(Math.random() * 10);
+            String name = imgListName[idx];
+
+            int currId = getResources().getIdentifier(currenIMG, "drawable",getPackageName());
+            int id = getResources().getIdentifier(name, "drawable",getPackageName());
+            imgVwAdviceViewer.setImageDrawable(getDrawable(id));
+            LAST_IMG_NAME.add(currId);
+            currenIMG = name;
+        }
     }
 
     public void showPreviousAdvice(View vw) {
-        actionNoImpemented(vw);
+        //actionNoImpemented(vw);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            int id;
+            if(LAST_IMG_NAME.isEmpty()){
+                id = getResources().getIdentifier("cvd19_main_view", "drawable",getPackageName());
+                currenIMG = "cvd19_main_view";
+            }
+            else{
+                id = LAST_IMG_NAME.get(LAST_IMG_NAME.size()-1);
+                LAST_IMG_NAME.remove(LAST_IMG_NAME.size()-1);
+            }
+            imgVwAdviceViewer.setImageDrawable(getDrawable(id));
+        }
     }
 
     //Database methods
@@ -748,4 +785,9 @@ public class MainActivity extends AppCompatActivity {
         else existDailyDir = true;
         return existCOVID19Dir && existDailyDir;
     }
+
+    private void populateImagenVector(){
+        imgListName = new String[]{"covid_ad_1","covid_ad_2", "cvd19_main_view","covid_ad_1","covid_ad_2", "cvd19_main_view","covid_ad_1","covid_ad_2", "cvd19_main_view", "cvd19_main_view","covid_ad_2"};
+    }
+
 }

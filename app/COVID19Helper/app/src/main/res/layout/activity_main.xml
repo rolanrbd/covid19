@@ -6,188 +6,196 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <TableRow
-        android:layout_width="399dp"
-        android:layout_height="716dp"
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <LinearLayout
+        <TableLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="horizontal">
+            android:layout_weight="0.8">
 
-            <TableLayout
-                android:layout_width="345dp"
-                android:layout_height="match_parent">
-
-                <TableRow
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent">
-
-                    <ImageButton
-                        android:id="@+id/imgBtnAlarm"
-                        style="?android:attr/buttonBarButtonStyle"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        app:srcCompat="@mipmap/cvd19_alarm" />
-                </TableRow>
-
-                <TableRow
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
-
-                    <LinearLayout
-                        android:layout_width="326dp"
-                        android:layout_height="match_parent"
-                        android:orientation="horizontal">
-
-                        <ImageButton
-                            android:id="@+id/imgBtnLeft"
-                            style="?android:attr/buttonBarButtonStyle"
-                            android:layout_width="33dp"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center|start|left"
-                            android:onClick="showPreviousAdvice"
-                            app:srcCompat="@mipmap/cvd19_left" />
-
-                        <ImageView
-                            android:id="@+id/imgVwAdviceViewer"
-                            android:layout_width="256dp"
-                            android:layout_height="wrap_content"
-                            android:contentDescription="@string/txtImgAdviceHomePage"
-                            app:srcCompat="@mipmap/cvd19_main_view" />
-
-                        <ImageButton
-                            android:id="@+id/imgBtnRight"
-                            style="?android:attr/buttonBarButtonStyle"
-                            android:layout_width="33dp"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center|right|end"
-                            android:onClick="showNextAdvice"
-                            app:srcCompat="@mipmap/cvd19_right" />
-                    </LinearLayout>
-
-                </TableRow>
-
-                <TableRow
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:gravity="center"
-                        android:orientation="vertical">
-
-                        <androidx.constraintlayout.widget.ConstraintLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="10dp">
-
-                        </androidx.constraintlayout.widget.ConstraintLayout>
-
-                        <Button
-                            android:id="@+id/btnNotifyCOVID19"
-                            android:layout_width="180dp"
-                            android:layout_height="wrap_content"
-                            android:background="@drawable/oval_shape_notify"
-                            android:onClick="notifyCovid19Positive"
-                            android:text="@string/btnNotifyCOVID19_string" />
-
-                        <androidx.constraintlayout.widget.ConstraintLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="5dp">
-
-                        </androidx.constraintlayout.widget.ConstraintLayout>
-
-                    </LinearLayout>
-
-                </TableRow>
-
-                <TableRow
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:gravity="center"
-                        android:orientation="vertical">
-
-                        <androidx.constraintlayout.widget.ConstraintLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="5dp">
-
-                        </androidx.constraintlayout.widget.ConstraintLayout>
-
-                        <Button
-                            android:id="@+id/btnEmergency"
-                            android:layout_width="180dp"
-                            android:layout_height="wrap_content"
-                            android:background="@drawable/oval_shape_emergency"
-                            android:onClick="callEmergency"
-                            android:text="@string/btnEmergency_string"
-                            android:textColor="#FFFFFF" />
-
-                        <androidx.constraintlayout.widget.ConstraintLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="5dp">
-
-                        </androidx.constraintlayout.widget.ConstraintLayout>
-                    </LinearLayout>
-
-                </TableRow>
-
-                <TableRow
-                    android:layout_width="325dp"
-                    android:layout_height="150dp">
-
-                    <FrameLayout
-                        android:layout_width="316dp"
-                        android:layout_height="match_parent"
-                        android:layout_gravity="clip_horizontal">
-
-                        <ImageView
-                            android:id="@+id/imgVwChart"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:contentDescription="@string/txtImgChartHomePage"
-                            app:srcCompat="@drawable/cvd19_chart_sample" />
-                    </FrameLayout>
-
-                </TableRow>
-
-                <TableRow
-                    android:layout_width="match_parent"
-                    android:layout_height="244dp">
-
-                    <FrameLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="234dp"
-                        android:layout_gravity="clip_horizontal|right">
-
-                        <ImageView
-                            android:id="@+id/imVwMap"
-                            android:layout_width="wrap_content"
-                            android:layout_height="220dp"
-                            android:contentDescription="@string/txtImgMapHomePage"
-                            app:srcCompat="@drawable/cvd19_mainpagemap_sample" />
-                    </FrameLayout>
-
-                </TableRow>
-            </TableLayout>
-
-            <LinearLayout
+            <TableRow
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="horizontal">
+                android:layout_weight="0.2">
+
+                <ImageButton
+                    android:id="@+id/imgBtnAlarm"
+                    style="?android:attr/buttonBarButtonStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:srcCompat="@mipmap/cvd19_alarm" />
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="0.2">
+
+                <LinearLayout
+                    android:layout_width="326dp"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
+
+                    <ImageButton
+                        android:id="@+id/imgBtnLeft"
+                        style="?android:attr/buttonBarButtonStyle"
+                        android:layout_width="33dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center|start|left"
+                        android:onClick="showPreviousAdvice"
+                        app:srcCompat="@mipmap/cvd19_left" />
+
+                    <ImageView
+                        android:id="@+id/imgVwAdviceViewer"
+                        android:layout_width="256dp"
+                        android:layout_height="wrap_content"
+                        android:contentDescription="@string/txtImgAdviceHomePage"
+                        app:srcCompat="@drawable/cvd19_main_view" />
+
+                    <ImageButton
+                        android:id="@+id/imgBtnRight"
+                        style="?android:attr/buttonBarButtonStyle"
+                        android:layout_width="33dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center|right|end"
+                        android:onClick="showNextAdvice"
+                        app:srcCompat="@mipmap/cvd19_right" />
+                </LinearLayout>
+
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="0.1">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:gravity="center"
                     android:orientation="vertical">
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="10dp">
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <Button
+                        android:id="@+id/btnNotifyCOVID19"
+                        android:layout_width="180dp"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/oval_shape_notify"
+                        android:onClick="notifyCovid19Positive"
+                        android:text="@string/btnNotifyCOVID19_string" />
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="5dp">
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                </LinearLayout>
+
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="0.1">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="5dp">
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <Button
+                        android:id="@+id/btnEmergency"
+                        android:layout_width="180dp"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/oval_shape_emergency"
+                        android:onClick="callEmergency"
+                        android:text="@string/btnEmergency_string"
+                        android:textColor="#FFFFFF" />
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="5dp">
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+                </LinearLayout>
+
+            </TableRow>
+
+            <TableRow
+                android:layout_width="325dp"
+                android:layout_height="150dp"
+                android:layout_weight="0.2">
+
+                <FrameLayout
+                    android:layout_width="316dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="clip_horizontal">
+
+                    <ImageView
+                        android:id="@+id/imgVwChart"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:contentDescription="@string/txtImgChartHomePage"
+                        app:srcCompat="@drawable/cvd19_chart_sample" />
+                </FrameLayout>
+
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="244dp"
+                android:layout_weight="0.2">
+
+                <FrameLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="234dp"
+                    android:layout_gravity="clip_horizontal|right">
+
+                    <ImageView
+                        android:id="@+id/imVwMap"
+                        android:layout_width="wrap_content"
+                        android:layout_height="220dp"
+                        android:contentDescription="@string/txtImgMapHomePage"
+                        app:srcCompat="@drawable/cvd19_mainpagemap_sample" />
+                </FrameLayout>
+
+            </TableRow>
+        </TableLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="0.2"
+            android:orientation="horizontal">
+
+            <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical" >
 
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:layout_width="match_parent"
@@ -363,7 +371,9 @@
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
                 </LinearLayout>
-            </LinearLayout>
+            </ScrollView>
+
         </LinearLayout>
-    </TableRow>
+    </LinearLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

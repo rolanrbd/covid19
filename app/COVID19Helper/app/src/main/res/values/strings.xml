@@ -37,4 +37,5 @@
     <string name="txtFact">Fact</string>
     <string name="txtMyth">Myth</string>
     <string name="txtFileDataName">FileData</string>
+    <string name="txtShare">Share</string>
 </resources>

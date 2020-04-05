@@ -1,0 +1,20 @@
+- Left mov: https://www.pngguru.com/free-transparent-background-png-clipart-esxie
+- Img MainView: https://www.pngguru.com/free-transparent-background-png-clipart-wflgc
+- settings: https://www.pngguru.com/free-transparent-background-png-clipart-rnucv
+- news: https://www.pngguru.com/free-transparent-background-png-clipart-nzcwh
+- Notifications: https://www.pngguru.com/free-transparent-background-png-clipart-wgjkd
+- Symptoms: https://www.pngguru.com/free-transparent-background-png-clipart-bikqy
+- routes: https://www.pngguru.com/free-transparent-background-png-clipart-tadby
+- food: https://www.pngguru.com/free-transparent-background-png-clipart-zbycv
+- media: https://www.pngguru.com/free-transparent-background-png-clipart-tmjnr
+- shared: https://www.pngguru.com/free-transparent-background-png-clipart-vgqeo
+- Local news: https://www.pngguru.com/free-transparent-background-png-clipart-njljy
+- Global news: https://www.pngguru.com/free-transparent-background-png-clipart-twndw
+- ico app: https://www.pngguru.com/free-transparent-background-png-clipart-wfxzk
+
+- check list: 
+Good for the future
+- red push button: https://www.pngguru.com/free-transparent-background-png-clipart-gddcu
+- virus: https://www.pngguru.com/free-transparent-background-png-clipart-vqnte
+
+startActivity(new Intent(Intent.ACTION_DIAL).setData(Uri.parse("tel:" + tel)));
