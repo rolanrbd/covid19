@@ -71,3 +71,33 @@ Do Steam Inhalation frequently. If you had to go out, when you get back at home 
 Gargle with antibacterial frequently;0
 If someone close or known to you was positive, don't wait for symptoms to appear. Maybe you already got the virus and are spreading it. Start taking action right away!;0
 If you are in a possible chain of infection, do not panic, the personal doctor will tell you the best time to do the exam. If the test is done very early it can give negative and this is more dangerous. Start taking the measures suggested here !!;0
+table;covid19_advice;rows;22
+cvd19_main_view;Be careful at all times
+covid_ad_001;How to properly wash your hands
+covid_ad_002;When a person is careless can indirectly affect hundred and cause the death of many
+covid_ad_003; Yes, the virus is invisible and can be there just waiting for you to get out. Stay home as long as you can!!
+covid_ad_004;Health professionals are fighting a battle against death to save all those who belong to the risk group. Let's Help them !!
+covid_ad_005;Would you go out if you could see it?
+covid_ad_006;They cannot go home to keep their family safe while caring for those in need. That patient may be our relative!
+covid_ad_007;We need to cooperate with each other to win this battle!!
+covid_ad_008;This is how our health professionals end each day!! Do your part!!
+covid_ad_009;Stay home as much as you can, avoid getting infected. Do not put your life or that of others at risk!!
+covid_ad_010;They are the angels of our family and sick friends! Be responsible and take all possible measures to avoid increasing infections!
+covid_ad_012;They are the shield that protect society. But they are insufficient when if the health system collapses!
+covid_ad_013;These are the real superheroes! Let's applaud but let's do our part!
+covid_ad_014;With love for the less healthy and intelligence, we can win this battle!!
+covid_ad_015;Health professionals are struggling to free us from this pandemic. Let's do our part!!
+covid_ad_016;If you are healthy and contract the virus and are spreading it without knowing it, you may be indirectly responsible for the death of those grandparents, parents, brothers who want to hug their relatives again!
+covid_ad_017;At this very moment, there are more than 80,000 deaths!! Let's help health personnel stop those deaths!!
+covid_ad_018;The risk group for this virus is high, the health personnel is insufficient to protect us all. Be responsible!!
+covid_ad_019;This is a war of the whole society! Let's take all precautions, let's be aware and responsible!!
+covid_ad_020;Keep the social distance, protect your loved ones, neighbors, friends!
+covid_ad_021;Maintain social distance, if possible 3-4 meters!
+covid_ad_022;keep your mouth and nose covered, if possible the eyes too. If you do not have the recommended covers, make it yourself from 100% cotton fabric!
+table;covid19_video;rows;6
+vd_001;vd_001;This is how a COVID-19 patient looks like. This patient could be you, a family member, friend, or neighbor. This patient also has a family !!;local
+vd_002;vd_002;A suggestion of entry protocol to the house. You can improve this example !!;local
+vd_003;vd_003;How many preventable deaths are acceptable to you each year?;local
+vd_004;vd_004;This is how the virus spreads when we are not careful.;local
+vd_005;vd_005;How to do the actions correctly to avoid contagion?;local
+vd_006;vd_006;This is how we cut the chain of contagion when we stay at home.;local

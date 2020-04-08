@@ -38,4 +38,23 @@
     <string name="txtMyth">Mito</string>
     <string name="txtFileDataName">FicheroDatos</string>
     <string name="txtShare">Compartir</string>
+    <string name="txtViewTotalCase">Total de Casos</string>
+    <string name="textViewActiveTitle">Casos Activos</string>
+    <string name="textViewRecoveredTitle">Recuperados</string>
+    <string name="textViewDeathsTitle">Muertes</string>
+    <string name="textViewNewCasesTitle">Nuevos Casos</string>
+    <string name="textViewNewDeathsTitle">Nuevas Muertes</string>
+    <string name="textCountriesHeader">Casos Confirmados por País</string>
+    <string name="textSearchBox">Busque Aquí por Nombre del País</string>
+    <string name="colCountryNameHEAD">País</string>
+    <string name="colCasesHEAD">Casos</string>
+    <string name="colNewCasesHEAD">Casos Hoy</string>
+    <string name="colRecoveredHEAD">Recuperados</string>
+    <string name="colNewDeathsHEAD">Muertes Hoy</string>
+    <string name="textViewHEADSource">Fuente: www.worldometers.info/coronavirus</string>
+    <string name="txtShareBody">Instala la aplicacion de Android (COVID19 Helper) para mantenerte actualizado con los datos y las herramientas para ayudarte</string>
+    <string name="txtBtnClosInf">Cerrar</string>
+    <string name="textViewActive">Activos</string>
+    <string name="txtDeveloper">Desarrollador</string>
+    <string name="txtLocation">Ubicación:</string>
 </resources>

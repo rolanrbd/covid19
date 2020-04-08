@@ -16,7 +16,8 @@ public class AdminDBCovid19Helper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         db.execSQL("create table covid19_symptoms ( id int primary key, classification string, symptom string, checked int)");
         db.execSQL("create table covid19_whattodo ( id int primary key, classification string, description string, why string, checked int)");
-        db.execSQL("create table covid19_advice ( id int primary key, description string, imagen blob)");
+        db.execSQL("create table covid19_advice ( id int primary key, name string, description string)");
+        db.execSQL("create table covid19_video ( id int primary key, name string, snapshot string, description string, location string)");
         /**
          * empty == 1 --> true is empty else  if empty == 0 --> false is not empty
          * date: last update

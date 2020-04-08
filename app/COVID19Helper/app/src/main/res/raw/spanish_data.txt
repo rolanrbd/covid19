@@ -71,3 +71,33 @@ Haga la inhalación de vapor con frecuencia. Si tuviera que salir, cuando regres
 Haga gárgaras con antibacterianos con frecuencia;0
 Si alguien cercano o conocido por usted fue positivo, no espere a que aparezcan los síntomas. Tal vez ya tienes el virus y lo estás propagando. ¡Comience a tomar medidas de inmediato!;0
 Si se encuentra en una posible cadena de infección, no se asuste, el médico personal le dirá el mejor momento para hacer el examen. Si la prueba se realiza muy temprano, puede dar resultados negativos y esto es más peligroso. ¡Comience a tomar las medidas sugeridas aquí!;0
+table;covid19_advice;rows;22
+cvd19_main_view;¡Ten cuidado en todo momento!
+covid_ad_001;Cómo lavarse manos apropiadamente.
+covid_ad_002;Cuando una persona es descuidada puede afectar indirectamente a cientos y causar la muerte de muchos.
+covid_ad_003;Sí, el virus es invisible y puede estar ahí esperando que salgas. ¡Quédate en casa todo el tiempo que puedas!
+covid_ad_004;Los profesionales de la salud están librando una batalla contra la muerte para salvar a todos los que pertenecen al grupo de riesgo. ¡Ayudémoslos!
+covid_ad_005;¿Saldrías si pudieras verlo?
+covid_ad_006;Ellos no pueden ir a casa para mantener a salvo a su familia mientras cuidan a los necesitados. ¡Ese paciente puede ser nuestro pariente!
+covid_ad_007;¡Necesitamos cooperar entre todos para ganar esta batalla!
+covid_ad_008;¡Así es como nuestros profesionales de la salud terminan cada día! ¡¡Haz tu parte!!
+covid_ad_009;Quédese en casa tanto como pueda, evite infectarse. ¡No arriesgues tu vida ni la de los demás!
+covid_ad_010;¡Son los ángeles de nuestra familia y amigos enfermos! ¡Sea responsable y tome todas las medidas posibles para evitar el aumento de infecciones!
+covid_ad_012;Ellos son el escudo que protege a la sociedad. ¡Pero son insuficientes cuando el sistema de salud colapsa!
+covid_ad_013;¡Estos son los verdaderos superhéroes! ¡Aplaudamos pero hagamos nuestra parte!
+covid_ad_014;¡Con amor por los menos sanos e inteligencia, podemos ganar esta batalla!
+covid_ad_015;Los profesionales de la salud están luchando por liberarnos de esta pandemia. ¡Hagamos nuestra parte!
+covid_ad_016;Si está sano y contrae el virus y lo está propagando sin saberlo, ¡puede ser indirectamente responsable de la muerte de esos abuelos, padres, hermanos que quieren abrazar a sus familiares nuevamente!
+covid_ad_017;¡En este mismo momento, hay más de 80,000 muertes! ¡Ayudemos al personal de salud a detener esas muertes!
+covid_ad_018;El grupo de riesgo para este virus es alto, el personal de salud es insuficiente para protegernos a todos. ¡¡Sé responsable!!
+covid_ad_019;¡Esta es una guerra de toda la sociedad! ¡Tomemos todas las precauciones, seamos conscientes y responsables!
+covid_ad_020;¡Mantenga la distancia social, proteja a sus seres queridos, vecinos, amigos!
+covid_ad_021;¡Mantenga la distancia social, si es posible de 3 a 4 metros!
+covid_ad_022;Mantenga su boca y nariz cubiertas, si es posible también los ojos. Si no tiene las cobertores recomendados, hágalo usted mismo con tela 100% algodón.
+table;covid19_video;rows;6
+vd-001.mp4;vd-001;Así es como se ve un paciente COVID-19. Este paciente puede ser usted, un familiar, amigo o vecino. ¡Este paciente también tiene una familia!;local
+vd-002.mp4;vd-002;Una sugerencia de protocolo de entrada a la casa. ¡Puedes mejorar este ejemplo!;local
+vd-003.mp4;vd-003;¿Cuántas muertes evitables son aceptables para usted cada año?;local
+vd-004.mp4;vd-004;Así es como se propaga el virus cuando no tenemos cuidado.;local
+vd-005.mp4;vd-005;¿Cómo hacer las acciones correctamente para evitar el contagio?;local
+vd-006.mp4;vd-006;Así es como cortamos la cadena de contagio cuando nos quedamos en casa.;local
