@@ -32,15 +32,14 @@ public class WhatToDo extends AppCompatActivity {
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setIcon(R.mipmap.ic_launcher);
 
-        lnLyVDo = (LinearLayout) findViewById(R.id.lnLyVDo);
-        lnLyVDoNot = (LinearLayout) findViewById(R.id.lnLyVDoNot);
+        lnLyVDo = findViewById(R.id.lnLyVDo);
+        lnLyVDoNot = findViewById(R.id.lnLyVDoNot);
 
         whatToDo = getIntent().getStringArrayExtra("whatToDoList");
         createWhatToDoBoxes();
 
         DisplayMetrics displayMetrics = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
-        //int height = displayMetrics.heightPixels;
         int width = displayMetrics.widthPixels / 2;
 
         lnLyVDo.getLayoutParams().width = width;

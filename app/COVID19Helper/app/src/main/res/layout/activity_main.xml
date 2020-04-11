@@ -623,6 +623,7 @@
             android:orientation="horizontal">
 
             <ScrollView
+                android:id="@+id/scrlVwBtnActions"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
@@ -642,26 +643,12 @@
                         style="?android:attr/buttonBarButtonStyle"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:onClick="goToCounting"
+                        android:onClick="goToActSettings"
                         app:srcCompat="@mipmap/cvd19_settings" />
 
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:layout_width="match_parent"
                         android:layout_height="2dp">
-
-                    </androidx.constraintlayout.widget.ConstraintLayout>
-
-                    <ImageButton
-                        android:id="@+id/imgBtnNotifications"
-                        style="?android:attr/buttonBarButtonStyle"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:onClick="goToActNotifications"
-                        app:srcCompat="@mipmap/cvd19_notification" />
-
-                    <androidx.constraintlayout.widget.ConstraintLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp">
 
                     </androidx.constraintlayout.widget.ConstraintLayout>
 

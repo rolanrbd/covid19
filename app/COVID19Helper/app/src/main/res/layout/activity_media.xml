@@ -63,7 +63,7 @@
                 android:id="@+id/vdVwer"
                 android:layout_width="wrap_content"
                 android:layout_height="200dp"
-                android:layout_gravity="center"
+                android:layout_gravity="center|center_horizontal"
                 android:layout_weight="0.3" />
         </TableRow>
 
@@ -79,6 +79,12 @@
                 android:layout_height="match_parent" />
 
         </TableRow>
+
+        <LinearLayout android:orientation="vertical"
+            android:id="@+id/lnLyMediaControler"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            />
 
     </TableLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

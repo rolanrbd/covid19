@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ImageView;
@@ -14,18 +15,17 @@ import android.widget.ListView;
 import android.widget.MediaController;
 import android.widget.VideoView;
 
+import java.lang.reflect.Parameter;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Media extends AppCompatActivity {
 
-    private LinearLayout lnLyLeft;
+    private LinearLayout lnLyMediaControler;
     private VideoView vdVwr;
     private String [] strVideoData = null;
-    private ImageView imgVwBackground = null;
     private String path = null;
 
-    private ImageView [] imgVwrLst = null;
     private ListView lstVwIMGs;
     private List<VideoModel> videoList = new ArrayList<>();
     private VideoListAdapter videoListAdapter;
@@ -42,16 +42,19 @@ public class Media extends AppCompatActivity {
         vdVwr = findViewById(R.id.vdVwer);
         strVideoData = getIntent().getStringArrayExtra("videoList");
         createVideoViewers();
+        lnLyMediaControler = findViewById(R.id.lnLyMediaControler);
 
         lstVwIMGs = findViewById(R.id.lstVwIMGs);
         lstVwIMGs.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 path = "android.resource://" + getPackageName() + "/" + videoList.get(position).getVideoName();
-                vdVwr.setMediaController((new MediaController(getApplicationContext())));
+                MediaController mController = new MediaController(Media.this);
+                vdVwr.setMediaController(mController);
                 vdVwr.setVideoURI(Uri.parse(path));
                 vdVwr.requestFocus();
                 vdVwr.start();
+                mController.setAnchorView(vdVwr);
             }
         });
 

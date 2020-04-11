@@ -1,13 +1,5 @@
 package com.r2bd.covid19Helper;
 
-import androidx.annotation.Nullable;
-import androidx.annotation.RequiresApi;
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
-
 import android.Manifest;
 import android.app.Activity;
 import android.content.ContentValues;
@@ -18,8 +10,9 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.media.MediaPlayer;
+import android.graphics.Typeface;
 import android.media.MediaRecorder;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
@@ -50,6 +43,16 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
+
+import com.r2bd.covid19Helper.Alarms.Utils;
+
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -61,6 +64,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -70,22 +74,18 @@ import java.util.Iterator;
 import java.util.Locale;
 import java.util.Random;
 
+
 public class MainActivity extends AppCompatActivity {
 
-    private static final int REQUEST_PERMISSION_PHONE_STATE = 1 ;
-    private static final int RETURN_CODE_SYMPTOMS = 1001 ;
-    private static final int RETURN_CODE_WHAT_TO_DO = 1002 ;
-    private static final int RETURN_CODE_HOW_TO_STOP = 1003 ;
-    private static String    DATE_CURRENT = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
-    private static int       DAILY_RECORD_COUNTER = 0;
-    private static int ID_COUNTER = 0;
+    private static final int REQUEST_PERMISSION_PHONE_STATE = 1;
+    private static final int RETURN_CODE_SYMPTOMS    = 1001;
+    private static final int RETURN_CODE_WHAT_TO_DO  = 1002;
+    private static final int RETURN_CODE_HOW_TO_STOP = 1003;
+    private static final int RETURN_CODE_SETTINGS    = 1004;
+    private static String DATE_CURRENT = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
+    private static int DAILY_RECORD_COUNTER = 0;
     private long timeStartRecord = 0;
 
-    private  static String EMERGENCY_NUMBER = "";
-    private  static String FOOD_BANK_NUMBER = "";
-
-    private ImageView imVwMap;
-    private ImageView imgVwChart;
     private ImageView imgBtnFoodBank;
     private ImageView imgVwAdviceViewer;
     private ImageView imgZoom = null;
@@ -94,8 +94,6 @@ public class MainActivity extends AppCompatActivity {
     private MediaRecorder audioRecorder = null;
     private String audioOutput = null;
     private ImageButton imgBtnRecord;
-    private boolean permissionToRecordGranted = false;
-    private ImageButton imgBtnSymptoms;
 
     private ArrayList<Integer> LAST_IMG_ID = new ArrayList<>();
     private ArrayList<String> LAST_IMG_NAME = new ArrayList<>();
@@ -105,7 +103,7 @@ public class MainActivity extends AppCompatActivity {
     //***********----------Counter----------------******************
     TextView textViewCases, textViewRecovered, textViewDeaths, textViewDate, textViewDeathsTitle,
             textViewRecoveredTitle, textViewActive, textViewActiveTitle, textViewNewDeaths,
-            textViewNewCases, textViewNewDeathsTitle, textViewNewCasesTitle ;
+            textViewNewCases, textViewNewDeathsTitle, textViewNewCasesTitle;
     EditText textSearchBox;
     Handler handler;
     String url = "https://www.worldometers.info/coronavirus/";
@@ -113,7 +111,6 @@ public class MainActivity extends AppCompatActivity {
     Document doc, germanDoc;
     Element countriesTable, row, germanTable;
     Elements countriesRows, cols, germanRows;
-    SharedPreferences preferences;
     SharedPreferences.Editor editor;
     Calendar myCalender;
     SimpleDateFormat myFormat;
@@ -140,46 +137,56 @@ public class MainActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setIcon(R.mipmap.ic_launcher);
 
+        //Getting the preferences of the application
+        androidx.preference.PreferenceManager.setDefaultValues(this, R.xml.settings, false);
+        SharedPreferences preferences = androidx.preference.PreferenceManager.getDefaultSharedPreferences(this);
+        SettingsAppValues.getPreferences(preferences, this, false);
+
+        try {
+            settingsUpdated();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
         //Setting the phone numbers
         Button btnNotifyCOVID19 = findViewById(R.id.btnNotifyCOVID19);
         btnNotifyCOVID19.setText(btnNotifyCOVID19.getText().toString() + " COVID19+");
 
-        //Check emergency phone number
-        Button btnEmergency = (Button) findViewById(R.id.btnEmergency);
-        if(EMERGENCY_NUMBER.length() != 0)
-            btnEmergency.setText(btnEmergency.getText().toString() + " " + EMERGENCY_NUMBER);
-
         //Check food bank numbers
         imgBtnFoodBank = findViewById(R.id.imgBtnFoodBank);
-        imgBtnFoodBank.setOnClickListener(new View.OnClickListener() { public void onClick(View vw) {
-            callFoodBank(vw);
-        } });
+        imgBtnFoodBank.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View vw) {
+                callFoodBank(vw);
+            }
+        });
 
         checkAudioRecordPermission();
         createRequiredDirectory();
         computeLasNumbOfRecord();
         imgBtnRecord = findViewById(R.id.imgBtnRecord);
-        imgBtnRecord.setOnTouchListener(new View.OnTouchListener(){
+        imgBtnRecord.setOnTouchListener(new View.OnTouchListener() {
 
-                @Override
-                public boolean onTouch(View vw, MotionEvent event) {
-                    switch(event.getAction()){
-                        case MotionEvent.ACTION_DOWN:
-                            try {
-                                startAudioRecorder(vw);
-                            }catch (IOException e){}
-                            break;
-                        case MotionEvent.ACTION_MOVE:
-                            // touch move code
-                            break;
-                        case MotionEvent.ACTION_UP:
-                            try {
-                                startAudioRecorder(vw);
-                            }catch (IOException e){}
-                            break;
-                    }
-                    return false;
+            @Override
+            public boolean onTouch(View vw, MotionEvent event) {
+                switch (event.getAction()) {
+                    case MotionEvent.ACTION_DOWN:
+                        try {
+                            startAudioRecorder(vw);
+                        } catch (IOException e) {
+                        }
+                        break;
+                    case MotionEvent.ACTION_MOVE:
+                        // touch move code
+                        break;
+                    case MotionEvent.ACTION_UP:
+                        try {
+                            startAudioRecorder(vw);
+                        } catch (IOException e) {
+                        }
+                        break;
                 }
+                return false;
+            }
         });
 
         createDBCovid19Helper();
@@ -191,7 +198,7 @@ public class MainActivity extends AppCompatActivity {
             AdminDBCovid19Helper dbAdmin = new AdminDBCovid19Helper(this, "dbCovid19Helper", null, 1);
             SQLiteDatabase db = dbAdmin.getWritableDatabase();
 
-            int rowsDeleted = db.delete("covid19_state","id=0",null);
+            int rowsDeleted = db.delete("covid19_state", "id=0", null);
 
             ContentValues rowValues = new ContentValues();
             //empty, dateLastUpdate
@@ -205,16 +212,15 @@ public class MainActivity extends AppCompatActivity {
         populateImagenVector();
 
         imgVwAdviceViewer = findViewById(R.id.imgVwAdviceViewer);
-        if(imgListName == null){
-            currenIMG =  getDefault().getLanguage().compareTo("en") == 0 ? "cvd19_main_view;Be careful at all times" : "cvd19_main_view;¡Ten cuidado en todo momento!";
-        }
-        else {
+        if (imgListName == null) {
+            currenIMG = getDefault().getLanguage().compareTo("en") == 0 ? "cvd19_main_view;Be careful at all times" : "cvd19_main_view;¡Ten cuidado en todo momento!";
+        } else {
             int limSup = imgListName == null ? 1 : imgListName.length;
-            int idx = (int) Math.floor(Math.random()*(limSup));
+            int idx = (int) Math.floor(Math.random() * (limSup));
             while (idx < 0 && idx > limSup)
-                idx = (int) Math.floor(Math.random()*(limSup));
+                idx = (int) Math.floor(Math.random() * (limSup));
             currenIMG = imgListName[idx];
-            int currId = getResources().getIdentifier(currenIMG.split(";")[0], "drawable",getPackageName());
+            int currId = getResources().getIdentifier(currenIMG.split(";")[0], "drawable", getPackageName());
             imgVwAdviceViewer.setImageDrawable(getDrawable(currId));
         }
 
@@ -224,9 +230,9 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 AlertDialog.Builder alrDlg = new AlertDialog.Builder(MainActivity.this);
 
-                String [] imgAndDescrip = currenIMG.split(";");
+                String[] imgAndDescrip = currenIMG.split(";");
                 imgZoom = new ImageView(v.getContext());
-                int currId = getResources().getIdentifier(imgAndDescrip[0], "drawable",getPackageName());
+                int currId = getResources().getIdentifier(imgAndDescrip[0], "drawable", getPackageName());
                 imgZoom.setImageDrawable(getDrawable(currId));
 
                 LinearLayout lnLy = new LinearLayout(MainActivity.this);
@@ -235,6 +241,7 @@ public class MainActivity extends AppCompatActivity {
                 txtVwDescription = new TextView(MainActivity.this);
                 txtVwDescription.setText(imgAndDescrip[1]);
                 txtVwDescription.setTextSize(16);
+                txtVwDescription.setTypeface(Typeface.DEFAULT_BOLD);
 
                 lnLy.addView(imgZoom);
                 lnLy.addView(txtVwDescription);
@@ -244,46 +251,35 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        //Setting an onClickListener to map imagen in the home page
-        /*
-        imVwMap = findViewById(R.id.imVwMap);
-        imVwMap.setOnClickListener(new View.OnClickListener() { public void onClick(View vw) {
-            actionNoImpemented(vw);
-        } });//*/
-
-        /*
-        //Setting an onClickListener to chart imagen in the home page
-        imgVwChart = findViewById(R.id.imgVwChart);
-        imgVwChart.setOnClickListener(new View.OnClickListener() { public void onClick(View vw) {
-            //actionNoImpemented(vw);
-            goToCounting(vw);
-            //goToActMedia(vw);
-        } });//*/
-
         //**************--------Counter-----------------***********************
         // All initial definitions
-        textViewCases = (TextView)findViewById(R.id.textViewCases);
-        textViewRecovered = (TextView)findViewById(R.id.textViewRecovered);
-        textViewDeaths = (TextView)findViewById(R.id.textViewDeaths);
-        textViewDate = (TextView)findViewById(R.id.textViewDate);
-        textViewRecoveredTitle = (TextView)findViewById(R.id.textViewRecoveredTitle);
-        textViewDeathsTitle = (TextView)findViewById(R.id.textViewDeathsTitle);
-        textViewActiveTitle = (TextView)findViewById(R.id.textViewActiveTitle);
-        textViewActive = (TextView)findViewById(R.id.textViewActive);
-        textViewNewDeaths = (TextView)findViewById(R.id.textViewNewDeaths);
-        textViewNewCases = (TextView)findViewById(R.id.textViewNewCases);
-        textViewNewCasesTitle = (TextView)findViewById(R.id.textViewNewCasesTitle);
-        textViewNewDeathsTitle = (TextView)findViewById(R.id.textViewNewDeathsTitle);
-        listViewCountries = (ListView)findViewById(R.id.listViewCountries);
-        textSearchBox = (EditText)findViewById(R.id.textSearchBox);
+        textViewCases = findViewById(R.id.textViewCases);
+        textViewRecovered = findViewById(R.id.textViewRecovered);
+        textViewDeaths = findViewById(R.id.textViewDeaths);
+        textViewDate = findViewById(R.id.textViewDate);
+        textViewRecoveredTitle = findViewById(R.id.textViewRecoveredTitle);
+        textViewDeathsTitle = findViewById(R.id.textViewDeathsTitle);
+        textViewActiveTitle = findViewById(R.id.textViewActiveTitle);
+        textViewActive = findViewById(R.id.textViewActive);
+        textViewNewDeaths = findViewById(R.id.textViewNewDeaths);
+        textViewNewCases = findViewById(R.id.textViewNewCases);
+        textViewNewCasesTitle = findViewById(R.id.textViewNewCasesTitle);
+        textViewNewDeathsTitle = findViewById(R.id.textViewNewDeathsTitle);
+        listViewCountries = findViewById(R.id.listViewCountries);
+        textSearchBox = findViewById(R.id.textSearchBox);
         textSearchBox.setVisibility(View.INVISIBLE);
-        countryProgressBar = (ProgressBar) findViewById(R.id.countryProgressBar);
-        colNumCountry = 0; colNumCases = 1; colNumRecovered = 0; colNumDeaths = 0; colNumNewCases = 0; colNumNewDeaths = 0;
+        countryProgressBar = findViewById(R.id.countryProgressBar);
+        colNumCountry = 0;
+        colNumCases = 1;
+        colNumRecovered = 0;
+        colNumDeaths = 0;
+        colNumNewCases = 0;
+        colNumNewDeaths = 0;
         preferences = PreferenceManager.getDefaultSharedPreferences(this);
         editor = preferences.edit();
         myFormat = new SimpleDateFormat("MMMM dd, yyyy, hh:mm:ss aaa", Locale.US);
         myCalender = Calendar.getInstance();
-        handler = new Handler() ;
+        handler = new Handler();
         generalDecimalFormat = new DecimalFormat("0.00", symbols);
         allCountriesResults = new ArrayList<CountryLine>();
 
@@ -323,8 +319,9 @@ public class MainActivity extends AppCompatActivity {
                 v.onTouchEvent(event);
                 return true;
             }
-            private boolean listIsAtTop()   {
-                if(listViewCountries.getChildCount() == 0) return true;
+
+            private boolean listIsAtTop() {
+                if (listViewCountries.getChildCount() == 0) return true;
                 return listViewCountries.getChildAt(0).getTop() == 0;
             }
         });
@@ -333,9 +330,9 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Log.e("CLICKED", allCountriesResults.get(position).getCountryName());
-                if(allCountriesResults.get(position).getCountryName().contains("Germany")){
+                if (allCountriesResults.get(position).getCountryName().contains("Germany")) {
                     countryProgressBar.setVisibility(View.VISIBLE);
-                    new Thread(new Runnable(){
+                    new Thread(new Runnable() {
                         @Override
                         public void run() {
                             try {
@@ -368,8 +365,7 @@ public class MainActivity extends AppCompatActivity {
                                                 .show();
                                     }
                                 });
-                            }
-                            catch (Exception ex) {
+                            } catch (Exception ex) {
                                 ex.printStackTrace();
                                 runOnUiThread(new Runnable() {
 
@@ -379,15 +375,15 @@ public class MainActivity extends AppCompatActivity {
                                                 Toast.LENGTH_LONG).show();
                                     }
                                 });
-                            }
-                            finally {
+                            } finally {
                                 doc = null;
                             }
                             runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
                                     countryProgressBar.setVisibility(View.GONE);
-                                }});
+                                }
+                            });
                         }
                     }).start();
                 }
@@ -395,7 +391,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
         // fetch previously saved data in SharedPreferences, if any
-        if(preferences.getString("textViewCases", null) != null ){
+        if (preferences.getString("textViewCases", null) != null) {
             textViewCases.setText(preferences.getString("textViewCases", null));
             textViewRecovered.setText(preferences.getString("textViewRecovered", null));
             textViewDeaths.setText(preferences.getString("textViewDeaths", null));
@@ -433,7 +429,7 @@ public class MainActivity extends AppCompatActivity {
             }
 
             @Override
-            public void beforeTextChanged(CharSequence s, int start, int count,int after) {
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
             }
 
             @Override
@@ -472,14 +468,16 @@ public class MainActivity extends AppCompatActivity {
 
         };
 
-        textSearchBox.setFilters(new InputFilter[] { filter });
+        textSearchBox.setFilters(new InputFilter[]{filter});
         textSearchBox.clearFocus();
         // Call refreshData once the app is opened only one time, then user can request updates
         refreshData();
     }
 
     public void goToActSettings(View vw) {
-        actionNoImpemented(vw);
+        //actionNoImpemented(vw);
+        Intent intSettings = new Intent(this, Settings.class);
+        startActivityForResult(intSettings, RETURN_CODE_SETTINGS);
     }
 
     public void goToActCovid19Symptom(View vw) {
@@ -497,7 +495,7 @@ public class MainActivity extends AppCompatActivity {
         Intent intFacts = new Intent(this, FactsVsMyths.class);
         intFacts.putExtra("factsVsMythsList", strArrFactsVsMyths);
         startActivity(intFacts);
-         //*/
+        //*/
     }
 
     public void goToActHowToStop(View vw) {
@@ -508,15 +506,14 @@ public class MainActivity extends AppCompatActivity {
         intHowToStop.putExtra("howToStopList", strArrHowToStop);
         startActivityForResult(intHowToStop, RETURN_CODE_HOW_TO_STOP);
         //startActivity(intHowToStop);
-         //*/
+        //*/
     }
 
     public void goToActRoutesList(View vw) {
         //actionNoImpemented(vw);
-
         Intent intRoutesList = new Intent(this, RoutesList.class);
         startActivity(intRoutesList);
-         //*/
+        //*/
     }
 
     public void goToActWhatToDo(View vw) {
@@ -545,17 +542,11 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void goToActNews(View vw) {
-       // actionNoImpemented(vw);
+        // actionNoImpemented(vw);
 
         Intent intNews = new Intent(this, News.class);
         startActivity(intNews);
-         //*/
-    }
-
-    public void goToCounting(View vw){
-        //Intent intCounting = new Intent(this, Counting.class);
-        //startActivity(intCounting);
-        actionNoImpemented(vw);
+        //*/
     }
 
     private void showExplanation(String title,
@@ -578,21 +569,6 @@ public class MainActivity extends AppCompatActivity {
                 new String[]{permissionName}, permissionRequestCode);
     }
 
-    private void showPhoneStatePermission() {
-        int permissionCheck = ContextCompat.checkSelfPermission(
-                this, Manifest.permission.READ_PHONE_STATE);
-        if (permissionCheck != PackageManager.PERMISSION_GRANTED) {
-            if (ActivityCompat.shouldShowRequestPermissionRationale(this,
-                    Manifest.permission.READ_PHONE_STATE)) {
-                showExplanation("Permission Needed", "Rationale", Manifest.permission.READ_PHONE_STATE, REQUEST_PERMISSION_PHONE_STATE);
-            } else {
-                requestPermission(Manifest.permission.READ_PHONE_STATE, REQUEST_PERMISSION_PHONE_STATE);
-            }
-        } else {
-            Toast.makeText(MainActivity.this, "Permission (already) Granted!", Toast.LENGTH_SHORT).show();
-        }
-    }
-
     @Override
     public void onRequestPermissionsResult(
             int requestCode,
@@ -610,41 +586,50 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void callEmergency(View vw) {
-        actionNoImpemented(vw);
+        //actionNoImpemented(vw);
 
-        /*
-        Uri callUri = Uri.parse("tel://911");
-        Intent callIntent = new Intent(Intent.ACTION_CALL,callUri);
-        callIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_NO_USER_ACTION);
-        startActivity(callIntent);
-         //*/
-        //TOFIX
-        /*
-        Intent i = new Intent(Intent.ACTION_CALL);
+        checkCallPermission();
+        int permisition = ActivityCompat.checkSelfPermission(this, Manifest.permission.CALL_PHONE);
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
-            showPhoneStatePermission();
-            // TODO: Consider calling
-            //    ActivityCompat#requestPermissions
-            // here to request the missing permissions, and then overriding
-            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-            //                                          int[] grantResults)
-            // to handle the case where the user grants the permission. See the documentation
-            // for ActivityCompat#requestPermissions for more details.
-
-            //return;
+            Toast t = Toast.makeText(this,"The current permission to call, it has been revoked",Toast.LENGTH_SHORT);
+            t.setGravity(Gravity.CENTER, 0, 0);
+            t.show();
+            return;
         }
-        i.setData(Uri.parse("tel:+5353282915"));
-        startActivity(i);
-        */
+        if(SettingsAppValues.emergencyNumber.isEmpty()){
+            Toast t = Toast.makeText(this,"It looks like you didn't set up a phone number for this action or the current phone number it's incorrect..",Toast.LENGTH_SHORT);
+            t.setGravity(Gravity.CENTER, 0, 0);
+            t.show();
+            return;
+        }
+
+        Intent callIntent = new Intent(Intent.ACTION_CALL);
+        Uri callUri = Uri.parse("tel://" + SettingsAppValues.emergencyNumber);
+        callIntent.setData(callUri);
+        startActivity(callIntent);
+
     }
 
     public void callFoodBank(View vw) {
 
-        if(FOOD_BANK_NUMBER.length() == 0) {
-            Toast toast = Toast.makeText(this, this.getString(R.string.txtActionCallFoodBank), Toast.LENGTH_SHORT);
-            toast.setGravity(Gravity.CENTER, 0, 0);
-            toast.show();
+        checkCallPermission();
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
+            Toast t = Toast.makeText(this,"The current permission to call, it has been revoked",Toast.LENGTH_SHORT);
+            t.setGravity(Gravity.CENTER, 0, 0);
+            t.show();
+            return;
         }
+        if(SettingsAppValues.foodBankNumber.isEmpty()){
+            Toast t = Toast.makeText(this,"It looks like you didn't set up a phone number for this action or the current phone number it's incorrect..",Toast.LENGTH_SHORT);
+            t.setGravity(Gravity.CENTER, 0, 0);
+            t.show();
+            return;
+        }
+
+        Intent callIntent = new Intent(Intent.ACTION_CALL);
+        Uri callUri = Uri.parse("tel://" + SettingsAppValues.foodBankNumber);
+        callIntent.setData(callUri);
+        startActivity(callIntent);
     }
 
     public void notifyCovid19Positive(View vw) {
@@ -999,7 +984,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void checkAudioRecordPermission(){
-
         if (ContextCompat.checkSelfPermission(getApplicationContext(),
                 Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED &&
                 ActivityCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.RECORD_AUDIO) !=
@@ -1012,9 +996,15 @@ public class MainActivity extends AppCompatActivity {
             boolean rslt = localDir.mkdirs();
             localDir = new File(ruta_sd + "/COVID19Helper", "MyDailyReports");
             rslt = localDir.mkdirs();
-
         }
+    }
 
+    private void checkCallPermission(){
+        if (ContextCompat.checkSelfPermission(getApplicationContext(),
+                Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(MainActivity.this,
+                    new String[]{Manifest.permission.CALL_PHONE}, 1000);
+        }
     }
 
     private void startAudioRecorder(View vw) throws IOException {
@@ -1070,17 +1060,6 @@ public class MainActivity extends AppCompatActivity {
              */
         }
 
-    }
-
-    public void playAudio(View vw) throws IOException {
-        MediaPlayer playAudio = new MediaPlayer();
-        try {
-            playAudio.setDataSource(audioOutput);
-            playAudio.prepare();
-        }catch (IOException e){}
-
-        playAudio.start();
-        Toast.makeText(this, this.getString(R.string.txtPlayAudioHomePage),Toast.LENGTH_SHORT).show();
     }
 
     public void keepPressToRecord(){
@@ -1140,6 +1119,15 @@ public class MainActivity extends AppCompatActivity {
                     db.execSQL(query);
                 }//*/
                 db.close();
+            }
+        }
+        else if(requestCode == RETURN_CODE_SETTINGS){
+            SharedPreferences preferences = androidx.preference.PreferenceManager.getDefaultSharedPreferences(this);
+            SettingsAppValues.getPreferences(preferences, this, true);
+            try {
+                settingsUpdated();
+            } catch (ParseException e) {
+                e.printStackTrace();
             }
         }
 
@@ -1400,5 +1388,50 @@ public class MainActivity extends AppCompatActivity {
                     }});
             }
         }).start();
+    }
+
+    private void settingsUpdated() throws ParseException {
+        //Setting up daily Record
+        if(SettingsAppValues.isAlarmDailyRecordChanged())
+        {
+            if(!SettingsAppValues.dailyRecord.equals(R.string.txtNone)){
+                String[] time =SettingsAppValues.dailyRecord.split(":");  //{"21","58"};
+
+                Calendar calendar = Calendar.getInstance();
+                calendar.setTimeInMillis(System.currentTimeMillis());
+                calendar.set(Calendar.HOUR_OF_DAY, Integer.parseInt(time[0]));
+                calendar.set(Calendar.MINUTE, Integer.parseInt(time[1]));
+                calendar.set(Calendar.SECOND, 0);
+
+                Utils.setDailyAlarmOnceADay(Utils.ALARM_ID_DAILY_RECORD/*alarmID*/, calendar.getTimeInMillis(), MainActivity.this);
+            }
+            else
+                Utils.stopAlarm(Utils.ALARM_ID_DAILY_RECORD, MainActivity.this);
+        }
+
+        //Setting up repetitive alarm for Tea
+        if(SettingsAppValues.isAlarmTeaChanged()){
+            if(SettingsAppValues.hotTeaFrequency != 0){
+                Utils.setDailyRepeatingAlarmFrequently(Utils.ALARM_ID_TEA,
+                        System.currentTimeMillis() + Utils.INTERVAL_ONE_HOUR * SettingsAppValues.hotTeaFrequency,
+                        Utils.INTERVAL_ONE_HOUR * SettingsAppValues.hotTeaFrequency, MainActivity.this);
+            }
+            else if(SettingsAppValues.hotTeaFrequency == 0){
+                Utils.stopAlarm(Utils.ALARM_ID_TEA, MainActivity.this);
+            }
+        }
+
+        //Setting up repetitive alarm for gargle
+        if(SettingsAppValues.isAlarmGargleChanged()){
+            if(SettingsAppValues.gargleFrequency != 0){
+                Utils.setDailyRepeatingAlarmFrequently(Utils.ALARM_ID_GARGLE,
+                                            System.currentTimeMillis() + Utils.INTERVAL_ONE_HOUR * SettingsAppValues.gargleFrequency,
+                                                       Utils.INTERVAL_ONE_HOUR * SettingsAppValues.gargleFrequency, MainActivity.this);
+            }
+            else if(SettingsAppValues.gargleFrequency == 0){
+                Utils.stopAlarm(Utils.ALARM_ID_GARGLE, MainActivity.this);
+            }
+        }
+
     }
 }

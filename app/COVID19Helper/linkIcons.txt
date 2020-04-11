@@ -16,3 +16,5 @@
 Good for the future
 - red push button: https://www.pngguru.com/free-transparent-background-png-clipart-gddcu
 - virus: https://www.pngguru.com/free-transparent-background-png-clipart-vqnte
+
+startActivity(new Intent(Intent.ACTION_DIAL).setData(Uri.parse("tel:" + tel)));

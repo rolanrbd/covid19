@@ -57,4 +57,19 @@
     <string name="textViewActive">Activos</string>
     <string name="txtDeveloper">Desarrollador</string>
     <string name="txtLocation">Ubicación:</string>
+    <string name="txt1Hour">1 Hora</string>
+    <string name="txt2Hour">2 Horas</string>
+    <string name="txt3Hour">3 Horas</string>
+    <string name="txtGarlicWater">Agua con Ajo</string>
+    <string name="txtLimeWhater">Agua con Limón</string>
+    <string name="txtHotTea">Té Caliente</string>
+    <string name="txtDailyRecord">Grabación Diaria</string>
+    <string name="txtGeneralAdvice">Consejos Generales</string>
+    <string name="txtNone">Ninguna</string>
+    <string name="txtSettingsEmergencyTitle">EMERGENCIA</string>
+    <string name="txtSettingsAlarmsTitle">ALARMAS</string>
+    <string name="txtSettingsNotificationsTitle">NOTIFICACIONES</string>
+    <string name="txtNotificationDailyRecord">Graba tus contactos diarios</string>
+    <string name="txtNotificationTeaTime">Tomar Té caliente</string>
+    <string name="txtNotificationGarleTime">Gárgaras de agua con sal</string>
 </resources>

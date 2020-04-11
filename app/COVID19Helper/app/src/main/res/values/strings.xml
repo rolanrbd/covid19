@@ -58,4 +58,27 @@
     <string name="txtShareBody">Install (COVID19 Helper) Android Application to keep updated with the data  and tools to help yourself</string>
     <string name="txtBtnClosInf">Close</string>
     <string name="txtLocation">Location:</string>
-    </resources>
+    <string name="txtNone">None</string>
+    <string name="txt1Hour">1 Hour</string>
+    <string name="txt2Hour">2 Hour</string>
+    <string name="txt3Hour">3 Hour</string>
+    <string name="txt9_00H"  translatable="false">9:00 PM</string>
+    <string name="txt9_30H"  translatable="false">9:30 PM</string>
+    <string name="txt10_00H"  translatable="false">10:00 PM</string>
+    <string name="txt10_30H"  translatable="false">10:30 PM</string>
+    <string name="txt11_00H"  translatable="false">11:00 PM</string>
+    <string name="txt11_30H"  translatable="false">11:30 PM</string>
+    <string name="txtGarlicWater">Garlic Water</string>
+    <string name="txtLimeWhater">Lime Water</string>
+    <string name="txtHotTea">Hot Tea</string>
+    <string name="txtDailyRecord">Daily Record</string>
+    <string name="txtGeneralAdvice">General Advice</string>
+    <string name="txtSettingsEmergencyTitle">EMERGENCY</string>
+    <string name="txtSettingsAlarmsTitle">ALARMS</string>
+    <string name="txtSettingsNotificationsTitle">NOTIFICATIONS</string>
+    <string name="txtNotificationDailyRecord">Record your daily contacts</string>
+    <string name="txtNotificationTeaTime">Time to drink hot Tea</string>
+    <string name="txtNotificationGarleTime">Time to gargle with salt water</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment" translatable="false">Hello blank fragment</string>
+</resources>
