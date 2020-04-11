@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <PreferenceCategory android:title="@string/txtSettingsEmergencyTitle">
+        <EditTextPreference
+            android:title="Emergency Phone Number"
+            android:key="sttEmerg"
+            android:summary="Phone Number to Call in Case Emergency"
+            android:entries="@array/arrEmergencyNumber"
+            android:entryValues="@array/arrEmergencyNumber"
+            android:icon="@mipmap/cvd19_911"
+            android:defaultValue="911"
+            />
+        <EditTextPreference
+            android:title="Food Bank Phone Number"
+            android:key="sttFoodBank"
+            android:summary="Contact to Call in Case of food need"
+            android:entries="@array/arrFoodBankNumber"
+            android:entryValues="@array/arrFoodBankNumber"
+            android:icon="@mipmap/cvd19_food"
+            />
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="@string/txtSettingsAlarmsTitle">
+        <ListPreference
+            android:title="Hot Tea"
+            android:key="sttHotTea"
+            android:summary="Frequency of Having Hot Tea"
+            android:entries="@array/arrAlarmHotTea"
+            android:entryValues="@array/arrAlarmHotTea"
+            android:icon="@mipmap/cvd19_tea"
+            android:defaultValue="@string/txtNone"
+            />
+
+        <ListPreference
+            android:title="Salt Water Gargle"
+            android:key="sttGargle"
+            android:summary="Frequency of Gargle"
+            android:entries="@array/arrAlarmGarglesOfSaltWater"
+            android:entryValues="@array/arrAlarmGarglesOfSaltWater"
+            android:icon="@mipmap/cvd19_throat"
+            android:defaultValue="@string/txtNone"
+            />
+
+        <ListPreference
+            android:title="Daily Record"
+            android:key="sttRecordDailyContacs"
+            android:summary="Record your daily places and contacs"
+            android:entries="@array/arrAlarmRecordDailyContact"
+            android:entryValues="@array/arrAlarmRecordDailyContact"
+            android:icon="@mipmap/cvd19_record"
+            android:defaultValue="@string/txt10_30H"
+            />
+
+        <ListPreference
+            android:title="Alarms Until..."
+            android:key="sttStopAlarms"
+            android:summary="Time to stop all daily alarms"
+            android:entries="@array/arrStopAlarm"
+            android:entryValues="@array/arrStopAlarm"
+            android:icon="@mipmap/cvd19_stop_alarms"
+            android:defaultValue="@string/txt9_00H"
+            />
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="@string/txtSettingsNotificationsTitle">
+        <SwitchPreference
+            android:defaultValue="true"
+            android:key="sttNotification"
+            android:summary="Enable Random Notifications"
+            android:title="Random Notifications"
+            android:icon="@mipmap/cvd19_advices"
+            />
+    </PreferenceCategory>
+
+</PreferenceScreen>

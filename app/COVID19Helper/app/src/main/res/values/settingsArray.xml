@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <array name="arrEmergencyNumber">
+        <item>911</item>
+    </array>
+
+    <array name="arrFoodBankNumber">
+        <item></item>
+    </array>
+
+    <array name="arrAlarmHotTea">
+        <item>@string/txtNone</item>
+        <item>@string/txt1Hour</item>
+        <item>@string/txt2Hour</item>
+        <item>@string/txt3Hour</item>
+    </array>
+    
+    <array name="arrAlarmGarglesOfSaltWater">
+        <item>@string/txtNone</item>
+        <item>@string/txt1Hour</item>
+        <item>@string/txt2Hour</item>
+        <item>@string/txt3Hour</item>
+    </array>
+
+    <array name="arrAlarmRecordDailyContact">
+        <item>@string/txtNone</item>
+        <item>@string/txt9_00H</item>
+        <item>@string/txt9_30H</item>
+        <item>@string/txt10_00H</item>
+        <item>@string/txt10_30H</item>
+        <item>@string/txt11_00H</item>
+        <item>@string/txt11_30H</item>
+    </array>
+
+    <array name="arrStopAlarm">
+        <item>@string/txt9_00H</item>
+        <item>@string/txt9_30H</item>
+        <item>@string/txt10_00H</item>
+        <item>@string/txt10_30H</item>
+        <item>@string/txt11_00H</item>
+        <item>@string/txt11_30H</item>
+    </array>
+</resources>
