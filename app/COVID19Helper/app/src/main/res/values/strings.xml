@@ -79,6 +79,9 @@
     <string name="txtNotificationDailyRecord">Record your daily contacts</string>
     <string name="txtNotificationTeaTime">Time to drink hot Tea</string>
     <string name="txtNotificationGarleTime">Time to gargle with salt water</string>
+    <string name="txtLastUpdate">Last updated: </string>
+    <string name="txtNetworkError">Network Connection Error!</string>
+    <string name="txtSttings">Settings</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment" translatable="false">Hello blank fragment</string>
 </resources>

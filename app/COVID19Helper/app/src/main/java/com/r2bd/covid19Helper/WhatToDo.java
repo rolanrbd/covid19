@@ -11,6 +11,7 @@ import android.util.DisplayMetrics;
 import android.view.Display;
 import android.view.Gravity;
 import android.view.View;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.LinearLayout;
@@ -22,6 +23,9 @@ public class WhatToDo extends AppCompatActivity {
     private LinearLayout lnLyVDoNot;
     private String [] whatToDo = null;
     private String whatToDoUpdated = "";
+    private int checkedCounter = 0;
+    private int currentOptionsChecked = 0;
+    private Button btnUpdateWhatToDo;
 
     @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
@@ -34,16 +38,13 @@ public class WhatToDo extends AppCompatActivity {
 
         lnLyVDo = findViewById(R.id.lnLyVDo);
         lnLyVDoNot = findViewById(R.id.lnLyVDoNot);
-
+        btnUpdateWhatToDo = findViewById(R.id.btnUpdateWhatToDo);
         whatToDo = getIntent().getStringArrayExtra("whatToDoList");
+        currentOptionsChecked = 0;
         createWhatToDoBoxes();
+        checkedCounter = 0;
 
-        DisplayMetrics displayMetrics = new DisplayMetrics();
-        getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
-        int width = displayMetrics.widthPixels / 2;
-
-        lnLyVDo.getLayoutParams().width = width;
-        lnLyVDoNot.getLayoutParams().width = width;
+        btnUpdateWhatToDo.setEnabled(false);
     }
 
     @RequiresApi(api = Build.VERSION_CODES.M)
@@ -71,7 +72,8 @@ public class WhatToDo extends AppCompatActivity {
 
             String[] strLst = whatToDo[i].split(";");
             chxBox.setText(strLst[1]);
-            chxBox.setChecked(Integer.parseInt(strLst[4]) == 1 ? true : false);
+            boolean state = Integer.parseInt(strLst[4]) == 1 ? true : false;
+            chxBox.setChecked(state);
             chxBox.setTextSize(16);
             if(strLst[2].compareTo("Do") == 0){
                 lnLyVDo.addView(chxBox);
@@ -102,6 +104,9 @@ public class WhatToDo extends AppCompatActivity {
                 strLst[4] = String.valueOf(checked);
                 String newString = strLst[0] + ";" + strLst[4];
                 whatToDoUpdated = whatToDoUpdated.isEmpty() ? newString : whatToDoUpdated + "@" + newString;
+                ++checkedCounter;
+                if(checkedCounter != 0 && currentOptionsChecked != checkedCounter)
+                    btnUpdateWhatToDo.setEnabled(true);
 
                 return;
             }

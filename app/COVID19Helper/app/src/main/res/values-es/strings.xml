@@ -3,7 +3,7 @@
     <string name="btnUpdateSymptom" translatable="false">Actualizar mis Síntomas</string>
     <string name="btnNotifyCOVID19_string">Notificar</string>
     <string name="btnEmergency_string">Llamar a Emergencia</string>
-    <string name="txtVwSymptomTitle">Símptomas</string>
+    <string name="txtVwSymptomTitle">Síntomas</string>
     <string name="txtVwMild">Leves</string>
     <string name="txtVwSevere">Severos</string>
     <string name="txtVwDoDontTitle">¿Qué hacer y qué no hacer en cuarentena?</string>
@@ -72,4 +72,7 @@
     <string name="txtNotificationDailyRecord">Graba tus contactos diarios</string>
     <string name="txtNotificationTeaTime">Tomar Té caliente</string>
     <string name="txtNotificationGarleTime">Gárgaras de agua con sal</string>
+    <string name="txtLastUpdate">"Actualizado: "</string>
+    <string name="txtNetworkError">Error de conexión!</string>
+    <string name="txtSttings">Configuración</string>
 </resources>

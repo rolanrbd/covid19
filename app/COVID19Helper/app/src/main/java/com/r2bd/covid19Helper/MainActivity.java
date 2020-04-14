@@ -100,11 +100,11 @@ public class MainActivity extends AppCompatActivity {
     private String[] imgListName = null;
     private String currenIMG = "cvd19_main_view";
 
-    //***********----------Counter----------------******************
+    //***********----------covid19tracker----------------******************
     TextView textViewCases, textViewRecovered, textViewDeaths, textViewDate, textViewDeathsTitle,
             textViewRecoveredTitle, textViewActive, textViewActiveTitle, textViewNewDeaths,
             textViewNewCases, textViewNewDeathsTitle, textViewNewCasesTitle;
-    EditText textSearchBox;
+    //EditText textSearchBox;
     Handler handler;
     String url = "https://www.worldometers.info/coronavirus/";
     String tmpCountry, tmpCases, tmpRecovered, tmpDeaths, tmpPercentage, germanResults, tmpNewCases, tmpNewDeaths;
@@ -135,7 +135,7 @@ public class MainActivity extends AppCompatActivity {
 
         //Setting the icon in the action bar
         getSupportActionBar().setDisplayShowHomeEnabled(true);
-        getSupportActionBar().setIcon(R.mipmap.ic_launcher);
+        //getSupportActionBar().setIcon(R.mipmap.ic_launcher);
 
         //Getting the preferences of the application
         androidx.preference.PreferenceManager.setDefaultValues(this, R.xml.settings, false);
@@ -161,7 +161,11 @@ public class MainActivity extends AppCompatActivity {
         });
 
         checkAudioRecordPermission();
-        createRequiredDirectory();
+        try {
+            createRequiredDirectory();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         computeLasNumbOfRecord();
         imgBtnRecord = findViewById(R.id.imgBtnRecord);
         imgBtnRecord.setOnTouchListener(new View.OnTouchListener() {
@@ -202,7 +206,7 @@ public class MainActivity extends AppCompatActivity {
 
             ContentValues rowValues = new ContentValues();
             //empty, dateLastUpdate
-            rowValues.put("dateLastUpdate", "2020-03-28");
+            rowValues.put("dateLastUpdate", "2020-04-11");
             rowValues.put("empty", 0);
             db.insert("covid19_state", null, rowValues);
 
@@ -251,7 +255,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        //**************--------Counter-----------------***********************
+        //**************--------covid19tracker-----------------***********************
         // All initial definitions
         textViewCases = findViewById(R.id.textViewCases);
         textViewRecovered = findViewById(R.id.textViewRecovered);
@@ -266,16 +270,11 @@ public class MainActivity extends AppCompatActivity {
         textViewNewCasesTitle = findViewById(R.id.textViewNewCasesTitle);
         textViewNewDeathsTitle = findViewById(R.id.textViewNewDeathsTitle);
         listViewCountries = findViewById(R.id.listViewCountries);
-        textSearchBox = findViewById(R.id.textSearchBox);
-        textSearchBox.setVisibility(View.INVISIBLE);
+        //textSearchBox = findViewById(R.id.textSearchBox);
+        //textSearchBox.setVisibility(View.INVISIBLE);
         countryProgressBar = findViewById(R.id.countryProgressBar);
-        colNumCountry = 0;
-        colNumCases = 1;
-        colNumRecovered = 0;
-        colNumDeaths = 0;
-        colNumNewCases = 0;
-        colNumNewDeaths = 0;
-        preferences = PreferenceManager.getDefaultSharedPreferences(this);
+        colNumCountry = 0; colNumCases = 1;colNumRecovered = 0; colNumDeaths = 0; colNumNewCases = 0; colNumNewDeaths = 0;
+        preferences =  androidx.preference.PreferenceManager.getDefaultSharedPreferences(this);
         editor = preferences.edit();
         myFormat = new SimpleDateFormat("MMMM dd, yyyy, hh:mm:ss aaa", Locale.US);
         myCalender = Calendar.getInstance();
@@ -326,6 +325,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        /*
         listViewCountries.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -388,7 +388,7 @@ public class MainActivity extends AppCompatActivity {
                     }).start();
                 }
             }
-        });
+        });//*/
 
         // fetch previously saved data in SharedPreferences, if any
         if (preferences.getString("textViewCases", null) != null) {
@@ -400,6 +400,7 @@ public class MainActivity extends AppCompatActivity {
             //calculate_percentages();
         }
 
+        /*
         // Add Text Change Listener to textSearchBox to filter by Country
         textSearchBox.addTextChangedListener(new TextWatcher() {
 
@@ -435,8 +436,9 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void afterTextChanged(Editable s) {
             }
-        });
+        });//*/
 
+        /*
         // Hide keyboard after hitting done button
         textSearchBox.setOnEditorActionListener(new TextView.OnEditorActionListener() {
 
@@ -451,7 +453,7 @@ public class MainActivity extends AppCompatActivity {
                 }
                 return false;
             }
-        });
+        });//*/
 
         InputFilter filter = new InputFilter() {
             public CharSequence filter(CharSequence source, int start, int end, Spanned dest, int dstart, int dend) {
@@ -468,13 +470,13 @@ public class MainActivity extends AppCompatActivity {
 
         };
 
-        textSearchBox.setFilters(new InputFilter[]{filter});
-        textSearchBox.clearFocus();
+        //textSearchBox.setFilters(new InputFilter[]{filter});
+        //textSearchBox.clearFocus();
         // Call refreshData once the app is opened only one time, then user can request updates
         refreshData();
     }
 
-    public void goToActSettings(View vw) {
+    public void goToActSettings(/*View vw*/) {
         //actionNoImpemented(vw);
         Intent intSettings = new Intent(this, Settings.class);
         startActivityForResult(intSettings, RETURN_CODE_SETTINGS);
@@ -547,26 +549,6 @@ public class MainActivity extends AppCompatActivity {
         Intent intNews = new Intent(this, News.class);
         startActivity(intNews);
         //*/
-    }
-
-    private void showExplanation(String title,
-                                 String message,
-                                 final String permission,
-                                 final int permissionRequestCode) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle(title)
-                .setMessage(message)
-                .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        requestPermission(permission, permissionRequestCode);
-                    }
-                });
-        builder.create().show();
-    }
-
-    private void requestPermission(String permissionName, int permissionRequestCode) {
-        ActivityCompat.requestPermissions(this,
-                new String[]{permissionName}, permissionRequestCode);
     }
 
     @Override
@@ -991,7 +973,8 @@ public class MainActivity extends AppCompatActivity {
                                 ActivityCompat.requestPermissions(MainActivity.this,
                                                         new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE,
                                                         Manifest.permission.RECORD_AUDIO}, 1000);
-            File ruta_sd = Environment.getExternalStorageDirectory();
+            File[] externalStorageVolumes = ContextCompat.getExternalFilesDirs(getApplicationContext(), null);
+            File ruta_sd = externalStorageVolumes[0];
             File localDir = new File(ruta_sd, "COVID19Helper");
             boolean rslt = localDir.mkdirs();
             localDir = new File(ruta_sd + "/COVID19Helper", "MyDailyReports");
@@ -1013,7 +996,7 @@ public class MainActivity extends AppCompatActivity {
         if(audioRecorder == null){
             timeStartRecord = System.currentTimeMillis();
             String audioFileName = DATE_CURRENT + "-" + (DAILY_RECORD_COUNTER + 1) + ".mp3";
-            audioOutput = Environment.getExternalStorageDirectory().getAbsolutePath()+ "/COVID19Helper/MyDailyReports/" + audioFileName;
+            audioOutput = getExternalFilesDir(null).getAbsolutePath()+ "/COVID19Helper/MyDailyReports/" + audioFileName;
             audioRecorder = new MediaRecorder();
             audioRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);
             audioRecorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
@@ -1134,7 +1117,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void computeLasNumbOfRecord(){
-        String audioFilesPath = Environment.getExternalStorageDirectory().getAbsolutePath()+ "/COVID19Helper/MyDailyReports/";
+        String audioFilesPath = getExternalFilesDir(null).getAbsolutePath()+ "/COVID19Helper/MyDailyReports/";
         File  f = new File(audioFilesPath);
         File [] audioFiles = f.listFiles();
         int lastIndex = -1;
@@ -1150,15 +1133,25 @@ public class MainActivity extends AppCompatActivity {
         DAILY_RECORD_COUNTER = lastIndex == -1 ? 0 : lastIndex;
     }
 
-    private boolean createRequiredDirectory(){
-        File ruta_sd = Environment.getExternalStorageDirectory();
-        File localDir = new File(ruta_sd, "COVID19Helper");
+    private boolean createRequiredDirectory() throws IOException {
+        /*
+        File localDir = new File(getApplicationContext().getExternalFilesDir(
+                null), "/COVID19Helper");
+        if (localDir == null || !localDir.mkdirs()) {
+            Log.e("LOG_TAG", "Directory not created");
+        }//*/
+
+        File[] externalStorageVolumes = ContextCompat.getExternalFilesDirs(getApplicationContext(), null);
+        File ruta_sd = externalStorageVolumes[0];
+        File localDir = new File(ruta_sd, "COVID19Helper");//*/
+        String s = localDir.getAbsolutePath();
         boolean existCOVID19Dir = false;
         boolean existDailyDir = false;
         if(!localDir.exists())
             existCOVID19Dir = localDir.mkdirs();
         else existCOVID19Dir = true;
-        localDir = new File(ruta_sd + "/COVID19Helper", "MyDailyReports");
+        String s2 = getExternalFilesDir(null).getAbsolutePath();
+        localDir = new File(localDir.getAbsolutePath() + "/COVID19Helper", "MyDailyReports");
         if(!localDir.exists())
             existDailyDir = localDir.mkdirs();
         else existDailyDir = true;
@@ -1185,11 +1178,67 @@ public class MainActivity extends AppCompatActivity {
         db.close();
     }
 
-    //******************-----------Counter---------------*********************
+    private void settingsUpdated() throws ParseException {
+        //dissable all alarms
+        if((SettingsAppValues.isNotificationsChanged() && !SettingsAppValues.notifications) || (!SettingsAppValues.isNotificationsChanged() && !SettingsAppValues.notifications)){
+            if(!SettingsAppValues.dailyRecord.equals(getString(R.string.txtNone)))
+                Utils.stopAlarm(Utils.ALARM_ID_DAILY_RECORD, MainActivity.this);
+            if(SettingsAppValues.hotTeaFrequency != 0)
+                Utils.stopAlarm(Utils.ALARM_ID_TEA, MainActivity.this);
+            if(SettingsAppValues.gargleFrequency != 0)
+                Utils.stopAlarm(Utils.ALARM_ID_GARGLE, MainActivity.this);
+            return;
+        }//*/
+
+        //Setting up daily Record
+        if(SettingsAppValues.isAlarmDailyRecordChanged() || (!SettingsAppValues.isAlarmDailyRecordChanged() && !SettingsAppValues.dailyRecord.equals(getString(R.string.txtNone))))
+        {
+            if(!SettingsAppValues.dailyRecord.equals(getString(R.string.txtNone))){
+                String[] time =SettingsAppValues.dailyRecord.split(":");  //{"21","58"};
+
+                Calendar calendar = Calendar.getInstance();
+                calendar.setTimeInMillis(System.currentTimeMillis());
+                calendar.set(Calendar.HOUR_OF_DAY, Integer.parseInt(time[0]));
+                calendar.set(Calendar.MINUTE, Integer.parseInt(time[1]));
+                calendar.set(Calendar.SECOND, 0);
+
+                Utils.setDailyAlarmOnceADay(Utils.ALARM_ID_DAILY_RECORD/*alarmID*/, calendar.getTimeInMillis(), MainActivity.this);
+            }
+            else
+                Utils.stopAlarm(Utils.ALARM_ID_DAILY_RECORD, MainActivity.this);
+        }
+
+        //Setting up repetitive alarm for Tea
+        if(SettingsAppValues.isAlarmTeaChanged() || (!SettingsAppValues.isAlarmTeaChanged() && SettingsAppValues.hotTeaFrequency != 0)){
+            if(SettingsAppValues.hotTeaFrequency != 0){
+                Utils.setDailyRepeatingAlarmFrequently(Utils.ALARM_ID_TEA,
+                        System.currentTimeMillis() + Utils.INTERVAL_ONE_HOUR * SettingsAppValues.hotTeaFrequency,
+                        Utils.INTERVAL_ONE_HOUR * SettingsAppValues.hotTeaFrequency, MainActivity.this);
+            }
+            else if(SettingsAppValues.hotTeaFrequency == 0){
+                Utils.stopAlarm(Utils.ALARM_ID_TEA, MainActivity.this);
+            }
+        }
+
+        //Setting up repetitive alarm for gargle
+        if(SettingsAppValues.isAlarmGargleChanged() || (!SettingsAppValues.isAlarmGargleChanged() && SettingsAppValues.gargleFrequency != 0)){
+            if(SettingsAppValues.gargleFrequency != 0){
+                Utils.setDailyRepeatingAlarmFrequently(Utils.ALARM_ID_GARGLE,
+                        System.currentTimeMillis() + Utils.INTERVAL_ONE_HOUR * SettingsAppValues.gargleFrequency,
+                        Utils.INTERVAL_ONE_HOUR * SettingsAppValues.gargleFrequency, MainActivity.this);
+            }
+            else if(SettingsAppValues.gargleFrequency == 0){
+                Utils.stopAlarm(Utils.ALARM_ID_GARGLE, MainActivity.this);
+            }
+        }
+
+    }
+
+    //******************-----------covid19tracker---------------*********************
     @Override
     protected void onResume() {
         super.onResume();
-        textSearchBox.clearFocus();
+        //textSearchBox.clearFocus();
     }
 
     @Override
@@ -1207,6 +1256,8 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        String strDeveloper = getString(R.string.txtDeveloper);
+        String strShare = getString(R.string.txtShare);
         switch (item.getItemId()) {
             case R.id.action_info:
                 new AlertDialog.Builder(this)
@@ -1214,9 +1265,10 @@ public class MainActivity extends AppCompatActivity {
                         .setCancelable(true)
                         .setMessage(getString(R.string.textViewHEADSource) +
                                 "\n\n" +
-                                "COVID-19 Tracker's  " + R.string.txtDeveloper + ": Sherif Mousa (Shatrix)" +
+                                "COVID-19 Tracker's  " + strDeveloper + ": Sherif Mousa (Shatrix)" +
                                 "\n" +
-                                "COVID19 Helper's " + R.string.txtDeveloper + ": Rolan R. Bullain")
+                                "COVID19 Helper's " + strDeveloper + ": Rolan R. Bullain" +
+                                "\n" + "r2bd.solutions@gmail.com")
                         .setPositiveButton(getString(R.string.txtBtnClosInf), null)
                         .setIcon(R.drawable.ic_info)
                         .show();
@@ -1228,11 +1280,14 @@ public class MainActivity extends AppCompatActivity {
                 sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
                 sharingIntent.setType("text/plain");
                 String shareBody = getString(R.string.txtShareBody) + " " +"\n" +
-                        "https://drive.google.com/drive/folders/16UYlBvUQ-Aln-IjJpE55e1VlM5EWO-2X?usp=sharing";
+                        "https://drive.google.com/drive/folders/1uRv5jq4psUGRTBiMVijh3tPckVB5M58O?usp=sharing";
+
                 sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, getString(R.string.app_name));
                 sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, shareBody );
-                startActivity(Intent.createChooser(sharingIntent, R.string.txtShare + " COVID19 Helper Link"));
+                startActivity(Intent.createChooser(sharingIntent,  strShare + " COVID19 Helper Link"));
                 return true;
+            case R.id.action_setting:
+                goToActSettings();
             default:
                 return super.onOptionsItemSelected(item);
 
@@ -1301,7 +1356,7 @@ public class MainActivity extends AppCompatActivity {
                                 row = rowIterator.next();
                                 cols = row.select("td");
 
-                                if (cols.get(0).text().contains("Total")) {
+                                if (cols.get(0).text().contains("World")) {
                                     textViewCases.setText(cols.get(colNumCases).text());
                                     textViewRecovered.setText(cols.get(colNumRecovered).text());
                                     textViewDeaths.setText(cols.get(colNumDeaths).text());
@@ -1312,7 +1367,17 @@ public class MainActivity extends AppCompatActivity {
                                     else {textViewNewCases.setText("0");}
                                     if (cols.get(colNumNewDeaths).hasText()) {textViewNewDeaths.setText(cols.get(colNumNewDeaths).text());}
                                     else {textViewNewDeaths.setText("0");}
-                                    break;
+                                    continue;
+                                } else if (
+                                        cols.get(0).text().contains("Total") ||
+                                        cols.get(0).text().contains("Europe") ||
+                                        cols.get(0).text().contains("North America") ||
+                                        cols.get(0).text().contains("Asia") ||
+                                        cols.get(0).text().contains("South America") ||
+                                        cols.get(0).text().contains("Africa") ||
+                                        cols.get(0).text().contains("Oceania")
+                                        ) {
+                                    continue;
                                 }
 
                                 if (cols.get(colNumCountry).hasText()) {tmpCountry = cols.get(0).text();}
@@ -1321,8 +1386,11 @@ public class MainActivity extends AppCompatActivity {
                                 if (cols.get(colNumCases).hasText()) {tmpCases = cols.get(colNumCases).text();}
                                 else {tmpCases = "0";}
 
-                                if (cols.get(colNumRecovered).hasText()){
-                                    tmpRecovered = cols.get(colNumRecovered).text();
+                                if (cols.get(colNumRecovered).hasText() ){
+                                    if(cols.get(colNumRecovered).text().equals("N/A") || cols.get(colNumRecovered).text().equals("NA"))
+                                        tmpRecovered = "0";
+                                    else
+                                        tmpRecovered = cols.get(colNumRecovered).text();
                                     tmpPercentage = (generalDecimalFormat.format(Double.parseDouble(tmpRecovered.replaceAll(",", ""))
                                             / Double.parseDouble(tmpCases.replaceAll(",", ""))
                                             * 100)) + "%";
@@ -1349,8 +1417,8 @@ public class MainActivity extends AppCompatActivity {
                             }
 
                             setListViewCountries(allCountriesResults);
-                            textSearchBox.setText(null);
-                            textSearchBox.clearFocus();
+                            //textSearchBox.setText(null);
+                            //textSearchBox.clearFocus();
 
                             // save results
                             editor.putString("textViewCases", textViewCases.getText().toString());
@@ -1363,7 +1431,8 @@ public class MainActivity extends AppCompatActivity {
                             calculate_percentages();
 
                             myCalender = Calendar.getInstance();
-                            textViewDate.setText("Last updated: " + myFormat.format(myCalender.getTime()));
+                            String lastUpdated = getString(R.string.txtLastUpdate);
+                            textViewDate.setText(lastUpdated + myFormat.format(myCalender.getTime()));
                         }
                     });
                 }
@@ -1373,8 +1442,11 @@ public class MainActivity extends AppCompatActivity {
 
                         @Override
                         public void run() {
-                            Toast.makeText(MainActivity.this, "Network Connection Error!",
-                                    Toast.LENGTH_LONG).show();
+                            String msgText = getString(R.string.txtNetworkError);
+                            Toast t = Toast.makeText(MainActivity.this, msgText,
+                                    Toast.LENGTH_LONG);
+                            t.setGravity(Gravity.CENTER, 0, 0);
+                            t.show();
                         }
                     });
                 }
@@ -1388,50 +1460,5 @@ public class MainActivity extends AppCompatActivity {
                     }});
             }
         }).start();
-    }
-
-    private void settingsUpdated() throws ParseException {
-        //Setting up daily Record
-        if(SettingsAppValues.isAlarmDailyRecordChanged())
-        {
-            if(!SettingsAppValues.dailyRecord.equals(R.string.txtNone)){
-                String[] time =SettingsAppValues.dailyRecord.split(":");  //{"21","58"};
-
-                Calendar calendar = Calendar.getInstance();
-                calendar.setTimeInMillis(System.currentTimeMillis());
-                calendar.set(Calendar.HOUR_OF_DAY, Integer.parseInt(time[0]));
-                calendar.set(Calendar.MINUTE, Integer.parseInt(time[1]));
-                calendar.set(Calendar.SECOND, 0);
-
-                Utils.setDailyAlarmOnceADay(Utils.ALARM_ID_DAILY_RECORD/*alarmID*/, calendar.getTimeInMillis(), MainActivity.this);
-            }
-            else
-                Utils.stopAlarm(Utils.ALARM_ID_DAILY_RECORD, MainActivity.this);
-        }
-
-        //Setting up repetitive alarm for Tea
-        if(SettingsAppValues.isAlarmTeaChanged()){
-            if(SettingsAppValues.hotTeaFrequency != 0){
-                Utils.setDailyRepeatingAlarmFrequently(Utils.ALARM_ID_TEA,
-                        System.currentTimeMillis() + Utils.INTERVAL_ONE_HOUR * SettingsAppValues.hotTeaFrequency,
-                        Utils.INTERVAL_ONE_HOUR * SettingsAppValues.hotTeaFrequency, MainActivity.this);
-            }
-            else if(SettingsAppValues.hotTeaFrequency == 0){
-                Utils.stopAlarm(Utils.ALARM_ID_TEA, MainActivity.this);
-            }
-        }
-
-        //Setting up repetitive alarm for gargle
-        if(SettingsAppValues.isAlarmGargleChanged()){
-            if(SettingsAppValues.gargleFrequency != 0){
-                Utils.setDailyRepeatingAlarmFrequently(Utils.ALARM_ID_GARGLE,
-                                            System.currentTimeMillis() + Utils.INTERVAL_ONE_HOUR * SettingsAppValues.gargleFrequency,
-                                                       Utils.INTERVAL_ONE_HOUR * SettingsAppValues.gargleFrequency, MainActivity.this);
-            }
-            else if(SettingsAppValues.gargleFrequency == 0){
-                Utils.stopAlarm(Utils.ALARM_ID_GARGLE, MainActivity.this);
-            }
-        }
-
     }
 }

@@ -9,12 +9,14 @@
     <TableLayout
         android:layout_width="410dp"
         android:layout_height="731dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
         <TableRow
             android:layout_width="match_parent"
-            android:layout_height="match_parent" >
+            android:layout_height="match_parent">
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -58,11 +60,12 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="horizontal">
+                android:orientation="vertical">
 
                 <LinearLayout
-                    android:layout_width="201dp"
+                    android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:layout_weight="0.5"
                     android:orientation="vertical">
 
                     <TextView
@@ -71,7 +74,8 @@
                         android:layout_height="wrap_content"
                         android:gravity="center"
                         android:text="@string/txtVwMild"
-                        android:textSize="16sp"
+                        android:textColor="@color/colorRedDark"
+                        android:textSize="18sp"
                         android:textStyle="bold" />
 
                     <ScrollView
@@ -91,6 +95,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:layout_weight="0.5"
                     android:orientation="vertical">
 
                     <TextView
@@ -99,7 +104,8 @@
                         android:layout_height="wrap_content"
                         android:gravity="center"
                         android:text="@string/txtVwSevere"
-                        android:textSize="16sp"
+                        android:textColor="@color/colorRedDark"
+                        android:textSize="18sp"
                         android:textStyle="bold" />
 
                     <ScrollView
@@ -121,10 +127,10 @@
         <TableRow
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="0.1">
+            android:layout_weight="0">
 
             <Button
-                android:id="@+id/button"
+                android:id="@+id/btnUpdated"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center"

@@ -9,6 +9,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.view.View;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.LinearLayout;
@@ -19,6 +20,10 @@ public class Covid19Symptoms extends AppCompatActivity  {
     private LinearLayout lnLyVSevere;
     private String [] strArrSymptoms = null;
     private String sympUpdated = "";
+    private int checkedCounter = 0;
+    private int currentOptionsChecked = 0;
+    private Button btnUpdated;
+
     @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,19 +33,16 @@ public class Covid19Symptoms extends AppCompatActivity  {
         getSupportActionBar().setIcon(R.mipmap.ic_launcher);
 
         setContentView(R.layout.activity_covid19_symptoms);
-        lnLyVMild = (LinearLayout) findViewById(R.id.lnLyVFacts);
-        lnLyVSevere = (LinearLayout) findViewById(R.id.lnLyVSevere);
-
-        DisplayMetrics displayMetrics = new DisplayMetrics();
-        getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
-        //int height = displayMetrics.heightPixels;
-        int width = displayMetrics.widthPixels / 2;
-
-        lnLyVMild.getLayoutParams().width = width;
-        lnLyVSevere.getLayoutParams().width = width;
+        lnLyVMild = findViewById(R.id.lnLyVFacts);
+        lnLyVSevere = findViewById(R.id.lnLyVSevere);
+        btnUpdated = findViewById(R.id.btnUpdated);
 
         strArrSymptoms = getIntent().getStringArrayExtra("symptomsList");
+        currentOptionsChecked = 0;
         createSymptonsBoxes();
+        checkedCounter = 0;
+
+        btnUpdated.setEnabled(false);
     }
 
     @RequiresApi(api = Build.VERSION_CODES.M)
@@ -67,7 +69,9 @@ public class Covid19Symptoms extends AppCompatActivity  {
             //fielValue(Position)--> classification(0);symptom(1);checked(2)
             String[] strLst = strArrSymptoms[i].split(";");
             chxBox.setText(strLst[1]);
-            chxBox.setChecked(Integer.parseInt(strLst[2]) == 1 ? true : false);
+            boolean state = Integer.parseInt(strLst[2]) == 1 ? true : false;
+            currentOptionsChecked = state ? currentOptionsChecked + 1 : currentOptionsChecked;
+            chxBox.setChecked(state);
             chxBox.setTextSize(16);
             if(strLst[0].compareTo("Mild") == 0){
                 lnLyVMild.addView(chxBox);
@@ -96,6 +100,9 @@ public class Covid19Symptoms extends AppCompatActivity  {
                 strLst[2] = String.valueOf(checked);
                 String newString = strLst[1] + ";" + strLst[2];
                 sympUpdated = sympUpdated.isEmpty() ? newString : sympUpdated + "@" + newString;
+                ++checkedCounter;
+                if(checkedCounter != 0 && currentOptionsChecked != checkedCounter)
+                    btnUpdated.setEnabled(true);
 
                 return;
             }

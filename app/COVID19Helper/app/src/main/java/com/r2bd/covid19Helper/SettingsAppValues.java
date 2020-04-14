@@ -23,11 +23,13 @@ public class SettingsAppValues {
     private static boolean alarmGargleChanged = false;
     private static boolean alarmStopChanged = false;
     private static boolean settingInvoked = false;
+    private static boolean notificationsChanged;
 
     public static boolean isAlarmDailyRecordChanged(){return alarmDailyRecordChanged;}
     public static boolean isAlarmTeaChanged(){return alarmTeaChanged;}
     public static boolean isAlarmGargleChanged(){return alarmGargleChanged;}
     public static boolean isAlarmStopChanged(){return alarmStopChanged;}
+    public static boolean isNotificationsChanged(){return notificationsChanged;}
 
     public static void getPreferences(SharedPreferences preferences, Context context, boolean b){
         settingInvoked = b;
@@ -140,6 +142,8 @@ public class SettingsAppValues {
             stopAlarms = "23:30";
         }
 
-        notifications = preferences.getBoolean(NOTIFICATIONS, true);
+        boolean bNotif = preferences.getBoolean(NOTIFICATIONS, false);
+        notificationsChanged = bNotif != notifications;
+        notifications = bNotif;
     }
 }

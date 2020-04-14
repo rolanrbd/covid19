@@ -9,6 +9,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.View;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.LinearLayout;
@@ -19,6 +20,9 @@ public class HowToStop extends AppCompatActivity {
     private LinearLayout lnLyVFacts;
     private String [] howToStop = null;
     private String howToStopDoUpdated = "";
+    private int checkedCounter = 0;
+    private int currentOptionsChecked = 0;
+    private Button btnUpdateHowToStop;
 
     @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
@@ -29,10 +33,15 @@ public class HowToStop extends AppCompatActivity {
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setIcon(R.mipmap.ic_launcher);
 
-        lnLyVFacts = (LinearLayout) findViewById(R.id.lnLyVFacts);
+        lnLyVFacts = findViewById(R.id.lnLyVFacts);
+        btnUpdateHowToStop = findViewById(R.id.btnUpdateHowToStop);
 
         howToStop = getIntent().getStringArrayExtra("howToStopList");
+        currentOptionsChecked = 0;
         createCheckboxes();
+        checkedCounter = 0;
+
+        btnUpdateHowToStop.setEnabled(false);
     }
 
     @RequiresApi(api = Build.VERSION_CODES.M)
@@ -55,7 +64,9 @@ public class HowToStop extends AppCompatActivity {
             //fielValue(Position)--> id(0), description(1);checked(2)
             String[] strLst = howToStop[i].split(";");
             chxBox.setText(strLst[1]);
-            chxBox.setChecked(Integer.parseInt(strLst[2]) == 1 ? true : false);
+            boolean state = Integer.parseInt(strLst[2]) == 1 ? true : false;
+            currentOptionsChecked = state ? currentOptionsChecked + 1 : currentOptionsChecked;
+            chxBox.setChecked(state);
             chxBox.setTextSize(16);
             chxBox.setPadding(0,10,10,10);
             if(i%2 != 0)
@@ -77,6 +88,9 @@ public class HowToStop extends AppCompatActivity {
                 strLst[2] = String.valueOf(checked);
                 String newString = strLst[0] + ";" + strLst[2];
                 howToStopDoUpdated = howToStopDoUpdated.isEmpty() ? newString : howToStopDoUpdated + "@" + newString;
+                ++checkedCounter;
+                if(checkedCounter != 0 && currentOptionsChecked != checkedCounter)
+                    btnUpdateHowToStop.setEnabled(true);
 
                 return;
             }

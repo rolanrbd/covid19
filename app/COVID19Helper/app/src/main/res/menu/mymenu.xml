@@ -16,4 +16,10 @@
         app:showAsAction="always"
         android:icon="@drawable/ic_refresh"
         android:title="Refresh"/>
+    <item
+        android:id="@+id/action_setting"
+        app:showAsAction="always"
+        android:icon="@mipmap/cvd19_settings"
+        android:title="@string/txtSttings"
+        />
 </menu>

@@ -41,7 +41,8 @@ public class RoutesList extends AppCompatActivity {
     }
 
     private void searchAudioFiles(){
-        File pathToMySongs = new File(Environment.getExternalStorageDirectory().getAbsolutePath() + "/COVID19Helper/MyDailyReports/");
+
+        File pathToMySongs = new File(getExternalFilesDir(null).getAbsolutePath() + "/COVID19Helper/MyDailyReports/");
         if(pathToMySongs.exists())
         {
             audioFiles = pathToMySongs.listFiles();
@@ -50,7 +51,7 @@ public class RoutesList extends AppCompatActivity {
 
     public void playAudio(View vw, String audioFile) throws IOException {
         MediaPlayer playAudio = new MediaPlayer();
-        String filePath = Environment.getExternalStorageDirectory().getAbsolutePath() + "/COVID19Helper/MyDailyReports/";
+        String filePath = getExternalFilesDir(null).getAbsolutePath() + "/COVID19Helper/MyDailyReports/";
         filePath += audioFile;
         try {
             playAudio.setDataSource(filePath);
@@ -104,7 +105,8 @@ public class RoutesList extends AppCompatActivity {
     }
 
     public void removeAudio(View vw, String audioFile, LinearLayout ly){
-        String filePath = Environment.getExternalStorageDirectory().getAbsolutePath() + "/COVID19Helper/MyDailyReports/";
+
+        String filePath = getExternalFilesDir(null).getAbsolutePath() + "/COVID19Helper/MyDailyReports/";
         filePath += audioFile;
 
         File mFile = new File(filePath);
@@ -116,7 +118,7 @@ public class RoutesList extends AppCompatActivity {
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         Date actualDate = new Date();
 
-        String audioFilesPath = Environment.getExternalStorageDirectory().getAbsolutePath()+ "/COVID19Helper/MyDailyReports/";
+        String audioFilesPath = getExternalFilesDir(null).getAbsolutePath()+ "/COVID19Helper/MyDailyReports/";
         File  f = new File(audioFilesPath);
         File [] audioFiles = f.listFiles();
 

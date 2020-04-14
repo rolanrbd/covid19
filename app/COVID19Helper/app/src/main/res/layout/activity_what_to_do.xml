@@ -59,12 +59,12 @@
             android:layout_weight="0.99">
 
             <LinearLayout
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:orientation="horizontal">
+                android:orientation="vertical">
 
                 <LinearLayout
-                    android:layout_width="201dp"
+                    android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="0.5"
                     android:orientation="vertical">
@@ -75,7 +75,8 @@
                         android:layout_height="wrap_content"
                         android:gravity="center"
                         android:text="@string/txtVwDo"
-                        android:textSize="16sp"
+                        android:textColor="@color/colorGreenDark"
+                        android:textSize="18sp"
                         android:textStyle="bold" />
 
                     <ScrollView
@@ -92,7 +93,7 @@
                 </LinearLayout>
 
                 <LinearLayout
-                    android:layout_width="204dp"
+                    android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="0.5"
                     android:orientation="vertical">
@@ -103,12 +104,13 @@
                         android:layout_height="wrap_content"
                         android:gravity="center"
                         android:text="@string/txtVwDont"
-                        android:textSize="16sp"
+                        android:textColor="@color/colorRedDark"
+                        android:textSize="18sp"
                         android:textStyle="bold" />
 
                     <ScrollView
                         android:id="@+id/scrlVwDont"
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="match_parent">
 
                         <LinearLayout
@@ -120,12 +122,13 @@
                 </LinearLayout>
 
             </LinearLayout>
+
         </TableRow>
 
         <TableRow
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="0.1">
+            android:layout_weight="0">
 
             <Button
                 android:id="@+id/btnUpdateWhatToDo"

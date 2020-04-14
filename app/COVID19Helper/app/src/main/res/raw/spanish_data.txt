@@ -1,4 +1,4 @@
-dateLastUpdate;2020-03-08
+dateLastUpdate;2020-04-11
 table;covid19_symptoms;rows;17
 Mild;Dolor de cabeza;0;
 Mild;Dolor de garganta;0;
@@ -17,30 +17,36 @@ Severe;Sentirse confundido;0;
 Severe;Perdiendo la conciencia;0;
 Severe;Fiebre;0;
 Severe;Tos persistente;0;
-table;covid19_whattodo;rows;16
+table;covid19_whattodo;rows;18
 Autoaislamiento durante 14 días o el número de días definido por las autoridades locales o federales;Do;;0
 Cubra su boca y nariz;Do;;0
 Cuando tosa, hágalo en la curva del codo;Do;;0
-Bebe agua caliente constantemente;Do;;0
+Beba agua caliente constantemente;Do;;0
 Beba bebidas calientes todo el tiempo, como té de orégano, té de limón, etc;Do;;0
 Solo tome paracetamol;Do;;0
-Comprueba tu temperatura sistemáticamente;Do;;0
-Prepara sopa de pollo, tómela caliente;Do;;0
+Compruebe su temperatura sistemáticamente;Do;;0
+Prepare sopa de pollo o hueso. Prepárelo a fuego muy bajo, para asegurarse de que los huesos liberen toda la enzima L-lisina (aminoácido antiviral). Tómelo caliente;Do;;0
 Revise sus síntomas con frecuencia;Do;;0
-Haga inhalaciones de vapor frecuentemente;Do;;0
-Corte un diente de ajo y póngalo en un recipiente y beba como agua común. Esto ayudará a fortalecer su sistema inmunológico.;Do;;0
-Cortar un limón en trozos y ponerlo en un recipiente y beber como agua común.;Do;;0
-Use gel antibacteriano (desinfectante para manos) con más del 70% de alcohol;Do;;0
+Haga gárgaras con agua salada con frecuencia;Do;;0
+No tome inhalaciones de vapor, eso no ayudará;DoNot;;0
+Ingrese a su hogar sin quitarse los zapatos, lavarse las manos, cambiarse de ropa;DoNot;;0
+Corte un diente de ajo y póngalo en un recipiente y beba como agua común. Esto NO MATARÁ el virus pero ayudará a fortalecer su sistema inmunológico.;Do;;0
+Corte un limón en trozos y ponerlo en un recipiente y beber como agua común.;Do;;0
+Use gel antibacterial (desinfectante para manos) con más del 70% de alcohol;Do;;0
 Caminar por las calles. Puede contagiar personas vulnerales;DoNot;;0
 Estar sin taparse la boca y la nariz;DoNot;;0
 Tomar o dejar de tomar, si lo necesita, ibuprofeno, aspirina, Advil o Voltaren sin consultar a su médico.;DoNot;;0
-table;covid19_facts;rows;20
-Fact;Puede ser asintomático hasta por 9 días o por todo el período de la enfermedad.
+table;covid19_facts;rows;24
+Fact;Usted puede ser asintomático hasta por 9 días o por todo el período de la enfermedad y en este tiempo estar transmitendo el virus a personas vulnerables.
 Fact;¡Una persona sana asintomática caminando por la calle puede dejar entre 3.000 y 4.000 puntos de infección!
 Fact;Algunos jóvenes, perfectamente sanos, de repente se enferman y mueren a causa de esta enfermedad (varios casos en Francia)
 Fact;El virus es diez veces más letal en los ancianos en comparación con los de mediana edad.
 Fact;Los pacientes con enfermedad cardiovascular tienen el mayor riesgo de muerte, seguidos de diabetes, enfermedad respiratoria crónica e hipertensión.
 Fact;Los pacientes con obesidad, enfermedad cardíaca, enfermedad pulmonar y fumadores con antecedentes de enfermedad pulmonar tienen un mayor riesgo de desarrollar complicaciones relacionadas con el virus.
+Fact;En los primeros días, el virus se aloja en la garganta (7 días o más). Este es el mejor momento para combatirlo (ver acciones sugeridas). Durante estos primeros días, hasta el 50% puede dar negativo al test. Solo después de 14 días, el 100% da positiva al test.
+Fact;En locales  cerrados con poca circulación de aire, las microgotas expulsadas por un portador de virus pueden permanecer durante un período de tiempo de 10 minutos o mucho más. Por eso es tan importante salir lo menos posible.
+Myth;Las inhalaciones de vapor pueden matar el virus.
+Fact;Tomar inhalaciones de vapor para "matar" el virus es potencialmente riesgoso. La limpieza a vapor a alta temperatura de superficies en hospitales y otros lugares destruye el coronavirus (así como otros tipos de virus), dice el profesor Keith Neal, especialista en el estudio de la propagación de enfermedades infecciosas en la Universidad de Nottingham. Sin embargo, cualquier intento de inhalar vapor a esta temperatura sería extremadamente peligroso y podría provocar quemaduras. El sistema de enfriamiento de su cuerpo se activaría para limitar el aumento de la temperatura, dice el profesor Neal, y sus pulmones ciertamente se dañarían irreparablemente antes de alcanzar una temperatura lo suficientemente alta como para desactivar el virus.
 Myth;El nuevo coronavirus se puede transmitir a través de productos fabricados en China.
 Fact;Aunque el virus puede permanecer en las superficies durante unas pocas horas después del contacto, la OMS dijo que es muy poco probable que persista en esa superficie después de ser movido, enviado y expuesto a diferentes condiciones y temperaturas. Para cualquier persona afectada, una superficie ha sido contaminada, la agencia de salud aconseja limpiarla con un desinfectante. Si alguien ya lo ha tocado antes de limpiarlo, debe lavarse inmediatamente las manos con un desinfectante para manos a base de alcohol o con agua y jabón.
 Myth;El clima frío y la nieve pueden matar al nuevo coronavirus.
@@ -55,24 +61,25 @@ Myth;El calor puede matar el virus.
 Fact;La OMS informa que las fuentes de calor, como los secadores de manos, no son efectivas para matar el virus. Además de eso, las lámparas ultravioleta (UV) tampoco deben usarse para esterilizar las manos u otras áreas del cuerpo.
 Myth;Los antibióticos pueden prevenir y tratar el nuevo coronavirus.
 Fact;Según la OMS, los antibióticos no funcionan contra virus, como COVID-19. Solo son efectivos para trabajar contra las bacterias y no deben usarse como un medio de prevención o tratamiento. Sin embargo, una persona que es tratada en el hospital por COVID-19 puede recibir antibióticos porque es posible una "coinfección bacteriana", dijo la agencia de salud.
-table;covid19_howtostop;rows;15
+table;covid19_howtostop;rows;16
 Mantenga la distancia, mínimo de 2 metros, 3 para mayor seguridad.;0
 ¿Tuviste que salir? Registre sus lugares y con quién se contactó.;0
 ¿Conoces a alguien que estuvo en contacto con un COVID19 + y estuvo en contacto hace menos de 9 días? Puede que te haya afectado. Comience a observar sus síntomas, mire la opción Cómo detenerlo.;0
-Si tuvieras que salir de tu casa cuando regreses, deberías entrar sin zapatos, el virus puede sobrevivir en tus zapatos;0
-Le diagnosticaron COVID19 +: notifique a todas las personas con las que estuvo en contacto en los últimos 8-10 días. Cuanto antes comiencen a tratarse en casa, es más probable que maten el virus antes de que llegue a sus pulmones.;0
+Si tuvieras que salir de su casa cuando regrese, debería entrar sin zapatos, el virus puede sobrevivir en tus zapatos;0
+Le diagnosticaron COVID19+: notifique a todas las personas con las que estuvo en contacto en los últimos 8-10 días. Cuanto antes comiencen a tratarse en casa, es más probable que maten el virus antes de que llegue a sus pulmones.;0
 ¿Eres una persona sana? ¡Puedes ser un héroe si eres responsable y estás tomando las medidas o un villano si eres irresponsable y no has tomado precauciones! Si contrae el virus y no tiene síntomas, puede transmitirlo a varias personas que pertenecen al grupo de riesgo (abuelos, hermanos, padres, amigos, ...).;0
 ¡NO bese ni toque a los niños después de haber estado fuera de casa sin lavar sus manos, cambiarse de ropa y bañarse!;0
-¡Los guantes son buenos si los usas correctamente! ¡El virus sobrevive en el látex durante mucho tiempo! ¡¡Así que ten cuidado!! ¡Puedes llevarlo en los guantes!;0
-Etás el mercado ¿el cajero usa guantes? ¡Exígeles que los cambie antes de atenderlo o que se lave las manos con gel antibacterial! Si no lo tiene, ¡déselo amablemente! Es posible que haya estado trabajando con ellos todo el día y transmitiendo inocentemente el virus.;0
+¡Los guantes son buenos si los usas correctamente! ¡El virus sobrevive en el látex durante mucho tiempo! ¡¡Así que tenga cuidado!! ¡Puedes llevarlo en los guantes!;0
+Está en el mercado ¿El cajero usa guantes? ¡Exígeles que los cambie antes de atenderlo o que se lave las manos con gel antibacterial! Si no lo tiene, ¡déselo amablemente! Es posible que haya estado trabajando con ellos todo el día y transmitiendo inocentemente el virus.;0
 Use gel antibacterial todo el tiempo. ¡Pero la forma más efectiva es lavarse las manos correctamente con mucho jabón!;0
 Marque el área de riesgo dentro de su casa, como un espacio en la entrada de la casa y no la traspase sin tomar las medidas apropiadas.;0
-Haga la inhalación de vapor con frecuencia. Si tuviera que salir, cuando regrese a casa, inhale vapor 2 o 3 veces, lo más caliente que pueda sin lastimarse.;0
-Haga gárgaras con antibacterianos con frecuencia;0
+Prepare sopa de pollo o hueso. Prepárelo a fuego muy bajo, para asegurarse de que los huesos liberen toda la enzima L-lisina (aminoácido antiviral).;0
+Haga gárgaras con agua salada con frecuencia 2 o 3 veces al día. Esto altera el PH de su garganta alcalinizandola creando una estado desfavorable para la proliferación del virus. Esto le dara cerca de un 36% de no contagiarse y una recuperación más rápida si llegara a contraer el virus.;0
+Tome una cucharadita de aceite de coco si no es alérgico. El aceite de coco es una grasa saturada que tiene un alto porcentaje de ácido láurico (es un antiviral). Al entrar en contacto con la capa de grasa que rodea al virus, lo destruye. Además, este aceite de coco se procesa en el hígado creando monolaurina, un antiviral aún más potente.;0
 Si alguien cercano o conocido por usted fue positivo, no espere a que aparezcan los síntomas. Tal vez ya tienes el virus y lo estás propagando. ¡Comience a tomar medidas de inmediato!;0
 Si se encuentra en una posible cadena de infección, no se asuste, el médico personal le dirá el mejor momento para hacer el examen. Si la prueba se realiza muy temprano, puede dar resultados negativos y esto es más peligroso. ¡Comience a tomar las medidas sugeridas aquí!;0
-table;covid19_advice;rows;22
-cvd19_main_view;¡Ten cuidado en todo momento!
+table;covid19_advice;rows;23
+cvd19_main_view;¡Tenga cuidado en todo momento!
 covid_ad_001;Cómo lavarse manos apropiadamente.
 covid_ad_002;Cuando una persona es descuidada puede afectar indirectamente a cientos y causar la muerte de muchos.
 covid_ad_003;Sí, el virus es invisible y puede estar ahí esperando que salgas. ¡Quédate en casa todo el tiempo que puedas!
@@ -81,23 +88,25 @@ covid_ad_005;¿Saldrías si pudieras verlo?
 covid_ad_006;Ellos no pueden ir a casa para mantener a salvo a su familia mientras cuidan a los necesitados. ¡Ese paciente puede ser nuestro pariente!
 covid_ad_007;¡Necesitamos cooperar entre todos para ganar esta batalla!
 covid_ad_008;¡Así es como nuestros profesionales de la salud terminan cada día! ¡¡Haz tu parte!!
-covid_ad_009;Quédese en casa tanto como pueda, evite infectarse. ¡No arriesgues tu vida ni la de los demás!
+covid_ad_009;Quédese en casa tanto como pueda, evite infectarse. ¡No arriesgues su vida ni la de los demás!
 covid_ad_010;¡Son los ángeles de nuestra familia y amigos enfermos! ¡Sea responsable y tome todas las medidas posibles para evitar el aumento de infecciones!
 covid_ad_012;Ellos son el escudo que protege a la sociedad. ¡Pero son insuficientes cuando el sistema de salud colapsa!
 covid_ad_013;¡Estos son los verdaderos superhéroes! ¡Aplaudamos pero hagamos nuestra parte!
 covid_ad_014;¡Con amor por los menos sanos e inteligencia, podemos ganar esta batalla!
 covid_ad_015;Los profesionales de la salud están luchando por liberarnos de esta pandemia. ¡Hagamos nuestra parte!
 covid_ad_016;Si está sano y contrae el virus y lo está propagando sin saberlo, ¡puede ser indirectamente responsable de la muerte de esos abuelos, padres, hermanos que quieren abrazar a sus familiares nuevamente!
-covid_ad_017;¡En este mismo momento, hay más de 80,000 muertes! ¡Ayudemos al personal de salud a detener esas muertes!
+covid_ad_017;¡En este mismo momento, hay más de 115,000 muertes! ¡Ayudemos al personal de salud a detener esas muertes!
 covid_ad_018;El grupo de riesgo para este virus es alto, el personal de salud es insuficiente para protegernos a todos. ¡¡Sé responsable!!
 covid_ad_019;¡Esta es una guerra de toda la sociedad! ¡Tomemos todas las precauciones, seamos conscientes y responsables!
 covid_ad_020;¡Mantenga la distancia social, proteja a sus seres queridos, vecinos, amigos!
 covid_ad_021;¡Mantenga la distancia social, si es posible de 3 a 4 metros!
 covid_ad_022;Mantenga su boca y nariz cubiertas, si es posible también los ojos. Si no tiene las cobertores recomendados, hágalo usted mismo con tela 100% algodón.
-table;covid19_video;rows;6
-vd-001.mp4;vd-001;Así es como se ve un paciente COVID-19. Este paciente puede ser usted, un familiar, amigo o vecino. ¡Este paciente también tiene una familia!;local
-vd-002.mp4;vd-002;Una sugerencia de protocolo de entrada a la casa. ¡Puedes mejorar este ejemplo!;local
-vd-003.mp4;vd-003;¿Cuántas muertes evitables son aceptables para usted cada año?;local
-vd-004.mp4;vd-004;Así es como se propaga el virus cuando no tenemos cuidado.;local
-vd-005.mp4;vd-005;¿Cómo hacer las acciones correctamente para evitar el contagio?;local
-vd-006.mp4;vd-006;Así es como cortamos la cadena de contagio cuando nos quedamos en casa.;local
+covid_ad_023;¡Si no se cubre la boca y la nariz, incluso 3 metros no es suficiente!
+table;covid19_video;rows;7
+vd_001;vd_001;Así es como se ve un paciente COVID-19. Este paciente puede ser usted, un familiar, amigo o vecino. ¡Este paciente también tiene una familia!;local
+vd_002;vd_002;Una sugerencia de protocolo de entrada a la casa. ¡Puedes mejorar este ejemplo!;local
+vd_003;vd_003;¿Cuántas muertes evitables son aceptables para usted cada año?;local
+vd_004;vd_004;Así es como se propaga el virus cuando no tenemos cuidado.;local
+vd_005;vd_005;¿Cómo hacer las acciones correctamente para evitar el contagio?;local
+vd_006;vd_006;Así es como cortamos la cadena de contagio cuando nos quedamos en casa.;local
+vd_007;vd_007;Así es como cortamos la cadena de contagio cuando nos quedamos en casa.;local
