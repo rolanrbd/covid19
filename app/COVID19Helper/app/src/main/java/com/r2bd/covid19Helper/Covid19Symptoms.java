@@ -56,6 +56,7 @@ public class Covid19Symptoms extends AppCompatActivity  {
         for (int i = 0; i < strArrSymptoms.length; ++i)
         {
             CheckBox chxBox = new CheckBox(getApplicationContext());
+            chxBox.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,LinearLayout.LayoutParams.WRAP_CONTENT));
 
             chxBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override

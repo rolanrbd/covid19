@@ -39,13 +39,19 @@
     <string name="txtFileDataName">FileData</string>
     <string name="txtShare">Share</string>
     <string name="txtViewTotalCase">Total Cases</string>
+    <string name="txtViewTotalCaseY">Total Cases Yesterday</string>
     <string name="textViewActiveTitle">Active Cases</string>
+    <string name="textViewActiveTitleY">Active Cases Yesterday</string>
     <string name="txtCountersInit" translatable="false">00000</string>
     <string name="textViewRecoveredTitle">Recovered</string>
+    <string name="textViewRecoveredTitleY">Recovered Yesterday</string>
     <string name="textViewDeathsTitle">Deaths</string>
+    <string name="textViewDeathsTitleY">Deaths Yesterday</string>
     <string name="textViewActive">Active</string>
     <string name="textViewNewCasesTitle">New Cases</string>
+    <string name="textViewNewCasesTitleY">New Cases Yesterday</string>
     <string name="textViewNewDeathsTitle">New Deaths</string>
+    <string name="textViewNewDeathsTitleY">New Deaths Yesterday</string>
     <string name="textCountriesHeader">Confirmed Cases by Country</string>
     <string name="textSearchBox">Search here by Country name</string>
     <string name="colCountryNameHEAD">Country</string>
@@ -54,6 +60,7 @@
     <string name="colRecoveredHEAD">Recovered</string>
     <string name="colNewDeathsHEAD">Deaths Today</string>
     <string name="textViewHEADSource">Source: www.worldometers.info/coronavirus</string>
+    <string name="textViewSource">Source: </string>
     <string name="txtDeveloper">Developer</string>
     <string name="txtShareBody">Install (COVID19 Helper) Android Application to keep updated with the data  and tools to help yourself</string>
     <string name="txtBtnClosInf">Close</string>
@@ -62,12 +69,12 @@
     <string name="txt1Hour">1 Hour</string>
     <string name="txt2Hour">2 Hour</string>
     <string name="txt3Hour">3 Hour</string>
-    <string name="txt9_00H"  translatable="false">9:00 PM</string>
-    <string name="txt9_30H"  translatable="false">9:30 PM</string>
-    <string name="txt10_00H"  translatable="false">10:00 PM</string>
-    <string name="txt10_30H"  translatable="false">10:30 PM</string>
-    <string name="txt11_00H"  translatable="false">11:00 PM</string>
-    <string name="txt11_30H"  translatable="false">11:30 PM</string>
+    <string name="txt9_00H" translatable="false">9:00 PM</string>
+    <string name="txt9_30H" translatable="false">9:30 PM</string>
+    <string name="txt10_00H" translatable="false">10:00 PM</string>
+    <string name="txt10_30H" translatable="false">10:30 PM</string>
+    <string name="txt11_00H" translatable="false">11:00 PM</string>
+    <string name="txt11_30H" translatable="false">11:30 PM</string>
     <string name="txtGarlicWater">Garlic Water</string>
     <string name="txtLimeWhater">Lime Water</string>
     <string name="txtHotTea">Hot Tea</string>
@@ -82,6 +89,30 @@
     <string name="txtLastUpdate">Last updated: </string>
     <string name="txtNetworkError">Network Connection Error!</string>
     <string name="txtSttings">Settings</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment" translatable="false">Hello blank fragment</string>
+
+    <string name="txtViewCasesPrefNow" translatable="false">txtViewCasesPrefNow</string>
+    <string name="txtViewRecoveredPrefNow" translatable="false">txtViewRecoveredPrefNow</string>
+    <string name="txtViewDeathsPrefNow" translatable="false">txtViewDeathsPrefNow</string>
+    <string name="txtViewDatePrefNow" translatable="false">txtViewDatePrefNow</string>
+    <string name="txtViewActivePrefNow" translatable="false">txtViewActivePrefNow</string>
+
+    <string name="txtViewCasesPrefY" translatable="false">txtViewCasesPrefY</string>
+    <string name="txtViewRecoveredPrefY" translatable="false">txtViewRecoveredPrefY</string>
+    <string name="txtViewDeathsPrefY" translatable="false">txtViewDeathsPrefY</string>
+    <string name="txtViewDatePrefY" translatable="false">txtViewDatePrefY</string>
+    <string name="txtViewActivePrefY" translatable="false">txtViewActivePrefY</string>
+
+    <string name="txtViewCasesPrefYC" translatable="false">txtViewCasesPrefYC</string>
+    <string name="txtViewRecoveredPrefYC" translatable="false">txtViewRecoveredPrefYC</string>
+    <string name="txtViewDeathsPrefYC" translatable="false">txtViewDeathsPrefYC</string>
+    <string name="txtViewDatePrefYC" translatable="false">txtViewDatePrefYC</string>
+    <string name="txtViewActivePrefYC" translatable="false">txtViewActivePrefYC</string>
+
+    <string name="txtFragmentSelectedTitle" translatable="false">txtFragmentSelectedTitle</string>
+
+    <string name="txtFragmentTitleNow">Now</string>
+    <string name="txtFragmentTitleYesterday">Yesterday</string>
+    <string name="txtFragmentTitleCountry">Selected Country</string>
+    <string name="txtYourSelectedCountryState">State</string>
+    <string name="txtYourSelectedCountryTableTitle">Confirmed Cases by State or Province</string>
 </resources>

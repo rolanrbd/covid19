@@ -93,7 +93,7 @@ public class NotificationService extends IntentService {
             mIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
             //String msg = mIntent.getStringArrayExtra("id").toString() + " --> " + mIntent.getStringArrayExtra("msg").toString();
             pendingIntent = PendingIntent.getActivity(context, 0, mIntent, PendingIntent.FLAG_UPDATE_CURRENT);
-            int rtr = pendingIntent.getCreatorUid();
+
             builder.setContentTitle(getString(R.string.app_name)).setCategory(Notification.CATEGORY_SERVICE)
                     .setSmallIcon(R.mipmap.ic_launcher)   // required
                     .setContentText(message)

@@ -75,4 +75,16 @@
     <string name="txtLastUpdate">"Actualizado: "</string>
     <string name="txtNetworkError">Error de conexión!</string>
     <string name="txtSttings">Configuración</string>
+    <string name="txtViewTotalCaseY">Total de Casos Ayer</string>
+    <string name="textViewActiveTitleY">Casos Activos Ayer</string>
+    <string name="textViewRecoveredTitleY">Recuperados Ayer</string>
+    <string name="textViewDeathsTitleY">Muertes Ayer</string>
+    <string name="textViewNewCasesTitleY">Nuevos Casos Ayer</string>
+    <string name="textViewNewDeathsTitleY">Nuevas Muertes Ayer</string>
+    <string name="txtFragmentTitleNow">Hoy</string>
+    <string name="txtFragmentTitleYesterday">Ayer</string>
+    <string name="txtFragmentTitleCountry">País Seleccionado</string>
+    <string name="textViewSource">"Fuente: "</string>
+    <string name="txtYourSelectedCountryState" translatable="false">Estado</string>
+    <string name="txtYourSelectedCountryTableTitle">Cases Confirmados por Estado o Provincia</string>
 </resources>

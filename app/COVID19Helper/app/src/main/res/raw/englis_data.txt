@@ -36,7 +36,7 @@ Use antibacterial gel (hand sanitizer) at more than 70% alcohol;Do;;0
 Walk around the streets;DoNot;;0
 Be without cover your mouth;DoNot;;0
 Take or stop taking, if you need it, Ibuprofen, Aspirin, Advil or Voltaren without consulting your physician;DoNot;;0
-table;covid19_facts;rows;24
+table;covid19_facts;rows;25
 Fact;You may be asymptomatic for up to 9 days or the entire period of illness
 Fact;An asymptomatic healthy person walking down the street can leave between 3,000 and 4,000 points of infection!!!
 Fact;Some very young, perfectly healthy suddenly get very sick and die from this disease (Several cases in France)
@@ -46,6 +46,7 @@ Fact;Patients with obesity, heart disease, lung disease and smokers with a histo
 Fact;In the first days the virus is lodged in the throat (can be up to 7 days or more). This is the best time to fight it (See suggested actions). During these first days, up to 50% can give negative to the test. Only after 14 days 100% give a positive test.
 Fact;In closed places with little air circulation, the microdroplets expelled by a virus carrier can remain for a period of time of 10 minutes or much more. That is why it is so important to go out as little as possible.
 Myth;Steam inhalations can kill the virus
+Fact;The World Health Organization says the average recovery time for mild cases is about two weeks and three to six weeks for patients with severe disease. Preventive measures should be taken for up to two weeks after symptoms disappear as patients may still be able to infect others.
 Fact;Taking steam inhalations to "kill" the virus is potentially risky. High-temperature steam-cleaning of surfaces in hospitals and elsewhere does destroy the coronavirus (as well as other types of viruses) says Prof Keith Neal, a specialist in the study of the spread of infectious diseases at the University of Nottingham. However, any attempt to inhale steam at this temperature, would be extremely dangerous and risk burns. Your body's cooling system would kick in to limit the rise in temperature, says Prof Neal, and your lungs would certainly be irreparably damaged before reaching a temperature high enough to deactivate the virus.
 Myth;The new coronavirus can be transmitted through products manufactured in China.
 Fact;Even though the virus can linger on surfaces for a few hours after contact, the WHO said it’s very unlikely it will persist on that surface after being moved, shipped, and exposed to different conditions and temperatures. For anyone concerned a surface has been contaminated, the health agency advises cleaning it with a disinfectant. If someone has already touched it before it’s been cleaned, they should immediately wash their hands with an alcohol-based hand rub or with soap and water.

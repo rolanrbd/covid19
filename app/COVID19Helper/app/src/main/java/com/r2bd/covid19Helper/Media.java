@@ -13,6 +13,9 @@ import android.widget.ListView;
 import android.widget.MediaController;
 import android.widget.VideoView;
 
+import com.r2bd.covid19Helper.Adapters.VideoListAdapter;
+import com.r2bd.covid19Helper.Models.VideoModel;
+
 import java.util.ArrayList;
 import java.util.List;
 

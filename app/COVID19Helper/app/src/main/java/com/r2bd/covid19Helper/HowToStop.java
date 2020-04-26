@@ -51,7 +51,7 @@ public class HowToStop extends AppCompatActivity {
         for (int i = 0; i < howToStop.length; ++i)
         {
             CheckBox chxBox = new CheckBox(getApplicationContext());
-
+            chxBox.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,LinearLayout.LayoutParams.WRAP_CONTENT));
             chxBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {

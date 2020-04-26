@@ -3,8 +3,6 @@ package com.r2bd.covid19Helper;
 import android.Manifest;
 import android.app.Activity;
 import android.content.ContentValues;
-import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
@@ -15,26 +13,16 @@ import android.media.MediaRecorder;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Environment;
-import android.os.Handler;
-import android.preference.PreferenceManager;
-import android.text.Editable;
-import android.text.InputFilter;
-import android.text.Spanned;
-import android.text.TextWatcher;
+import android.os.StrictMode;
 import android.util.Log;
 import android.view.Gravity;
-import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.inputmethod.EditorInfo;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -43,15 +31,31 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
+import androidx.viewpager2.widget.ViewPager2;
 
+import com.google.android.material.tabs.TabLayout;
+import com.google.android.material.tabs.TabLayoutMediator;
+import com.r2bd.covid19Helper.Adapters.ListCountriesAdapter;
+import com.r2bd.covid19Helper.Adapters.ViewPagerAdapter;
 import com.r2bd.covid19Helper.Alarms.Utils;
+import com.r2bd.covid19Helper.Country.Country;
+import com.r2bd.covid19Helper.Country.CountryFactory;
+import com.r2bd.covid19Helper.Country.Cuba.Cuba;
+import com.r2bd.covid19Helper.Fragments.NowFragment;
+import com.r2bd.covid19Helper.Fragments.YesterdayFragment;
+import com.r2bd.covid19Helper.Fragments.YourCountryFragment;
+import com.r2bd.covid19Helper.Models.CasesValues;
+import com.r2bd.covid19Helper.Models.SharedViewModel;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -74,8 +78,12 @@ import java.util.Iterator;
 import java.util.Locale;
 import java.util.Random;
 
+public class MainActivity extends AppCompatActivity implements  NowFragment.OnRefreshCasesDataNow,
+                                                                NowFragment.OnClickCountryListView,
+                                                                YesterdayFragment.OnRefreshCasesDataYesterday,
+                                                                YourCountryFragment.OnRefreshCasesDataOfYourCountry
 
-public class MainActivity extends AppCompatActivity {
+{
 
     private static final int REQUEST_PERMISSION_PHONE_STATE = 1;
     private static final int RETURN_CODE_SYMPTOMS    = 1001;
@@ -99,33 +107,37 @@ public class MainActivity extends AppCompatActivity {
     private ArrayList<String> LAST_IMG_NAME = new ArrayList<>();
     private String[] imgListName = null;
     private String currenIMG = "cvd19_main_view";
-
+    String currentCountrySelected = "USA";
+    TabLayout tbLyData;
+    ViewPager2 vwPager;
+    ViewPagerAdapter vwPagAdapter;
+    SharedViewModel casesViewModel;
+    NowFragment fNow;
+    YesterdayFragment fYesterday;
+    YourCountryFragment fYourCountry;
+    CasesValues caseData;
+    
     //***********----------covid19tracker----------------******************
-    TextView textViewCases, textViewRecovered, textViewDeaths, textViewDate, textViewDeathsTitle,
-            textViewRecoveredTitle, textViewActive, textViewActiveTitle, textViewNewDeaths,
-            textViewNewCases, textViewNewDeathsTitle, textViewNewCasesTitle;
-    //EditText textSearchBox;
-    Handler handler;
     String url = "https://www.worldometers.info/coronavirus/";
-    String tmpCountry, tmpCases, tmpRecovered, tmpDeaths, tmpPercentage, germanResults, tmpNewCases, tmpNewDeaths;
-    Document doc, germanDoc;
-    Element countriesTable, row, germanTable;
-    Elements countriesRows, cols, germanRows;
+    String tmpCountry, tmpCases, tmpRecovered, tmpDeaths, tmpPercentage, tmpNewCases, tmpNewDeaths;
+    Document doc;
+    Element countriesTable, row;
+    Elements countriesRows, cols;
     SharedPreferences.Editor editor;
     Calendar myCalender;
     SimpleDateFormat myFormat;
-    double tmpNumber;
     DecimalFormat generalDecimalFormat;
     DecimalFormatSymbols symbols = new DecimalFormatSymbols(Locale.US);
-    ListView listViewCountries;
     ListCountriesAdapter listCountriesAdapter;
-    ArrayList<CountryLine> allCountriesResults, FilteredArrList;
+    ArrayList<CountryLine> allCountriesResults; //FilteredArrList;
     Intent sharingIntent;
     int colNumCountry, colNumCases, colNumRecovered, colNumDeaths, colNumActive, colNumNewCases, colNumNewDeaths;
-    SwipeRefreshLayout mySwipeRefreshLayout;
-    InputMethodManager inputMethodManager;
     Iterator<Element> rowIterator;
     ProgressBar countryProgressBar;
+
+    SwipeRefreshLayout mySwipeRefreshLayout = null;
+    ListView listViewCountries = null;
+
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
@@ -176,8 +188,7 @@ public class MainActivity extends AppCompatActivity {
                     case MotionEvent.ACTION_DOWN:
                         try {
                             startAudioRecorder(vw);
-                        } catch (IOException e) {
-                        }
+                        } catch (IOException e) {}
                         break;
                     case MotionEvent.ACTION_MOVE:
                         // touch move code
@@ -185,8 +196,7 @@ public class MainActivity extends AppCompatActivity {
                     case MotionEvent.ACTION_UP:
                         try {
                             startAudioRecorder(vw);
-                        } catch (IOException e) {
-                        }
+                        } catch (IOException e) {}
                         break;
                 }
                 return false;
@@ -256,224 +266,55 @@ public class MainActivity extends AppCompatActivity {
         });
 
         //**************--------covid19tracker-----------------***********************
-        // All initial definitions
-        textViewCases = findViewById(R.id.textViewCases);
-        textViewRecovered = findViewById(R.id.textViewRecovered);
-        textViewDeaths = findViewById(R.id.textViewDeaths);
-        textViewDate = findViewById(R.id.textViewDate);
-        textViewRecoveredTitle = findViewById(R.id.textViewRecoveredTitle);
-        textViewDeathsTitle = findViewById(R.id.textViewDeathsTitle);
-        textViewActiveTitle = findViewById(R.id.textViewActiveTitle);
-        textViewActive = findViewById(R.id.textViewActive);
-        textViewNewDeaths = findViewById(R.id.textViewNewDeaths);
-        textViewNewCases = findViewById(R.id.textViewNewCases);
-        textViewNewCasesTitle = findViewById(R.id.textViewNewCasesTitle);
-        textViewNewDeathsTitle = findViewById(R.id.textViewNewDeathsTitle);
-        listViewCountries = findViewById(R.id.listViewCountries);
-        //textSearchBox = findViewById(R.id.textSearchBox);
-        //textSearchBox.setVisibility(View.INVISIBLE);
-        countryProgressBar = findViewById(R.id.countryProgressBar);
+        countryProgressBar = findViewById(R.id.countryProgressBarN);
         colNumCountry = 0; colNumCases = 1;colNumRecovered = 0; colNumDeaths = 0; colNumNewCases = 0; colNumNewDeaths = 0;
         preferences =  androidx.preference.PreferenceManager.getDefaultSharedPreferences(this);
         editor = preferences.edit();
         myFormat = new SimpleDateFormat("MMMM dd, yyyy, hh:mm:ss aaa", Locale.US);
         myCalender = Calendar.getInstance();
-        handler = new Handler();
         generalDecimalFormat = new DecimalFormat("0.00", symbols);
-        allCountriesResults = new ArrayList<CountryLine>();
+        allCountriesResults = new ArrayList<>();
 
-        // Implement Swipe to Refresh
-        mySwipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.coronaMainSwipeRefresh);
-        mySwipeRefreshLayout.setColorSchemeResources(android.R.color.holo_blue_bright,
-                android.R.color.holo_green_light,
-                android.R.color.holo_orange_light,
-                android.R.color.holo_red_light);
-        mySwipeRefreshLayout.setOnRefreshListener(
-                new SwipeRefreshLayout.OnRefreshListener() {
-                    @Override
-                    public void onRefresh() {
-                        refreshData();
-                    }
-                }
-        );
-
-        // fix interference between scrolling in listView & parent SwipeRefreshLayout
-        listViewCountries.setOnTouchListener(new View.OnTouchListener() {
+        //Tabs
+        casesViewModel =  new ViewModelProvider(this).get(SharedViewModel.class);
+        casesViewModel.getCasesData().observe(this, new Observer<CasesValues>() {
             @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                int action = event.getAction();
-                switch (action) {
-                    case MotionEvent.ACTION_DOWN:
-                        // Disallow ScrollView to intercept touch events.
-                        if (!listIsAtTop()) mySwipeRefreshLayout.setEnabled(false);
-                        break;
-
-                    case MotionEvent.ACTION_UP:
-                        // Allow ScrollView to intercept touch events.
-                        mySwipeRefreshLayout.setEnabled(true);
-                        break;
-                }
-
-                // Handle ListView touch events.
-                v.onTouchEvent(event);
-                return true;
-            }
-
-            private boolean listIsAtTop() {
-                if (listViewCountries.getChildCount() == 0) return true;
-                return listViewCountries.getChildAt(0).getTop() == 0;
+            public void onChanged(CasesValues casesValues) {
+                //Crear adapter para actualizar los datos
+                caseData = casesValues;
             }
         });
 
-        /*
-        listViewCountries.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Log.e("CLICKED", allCountriesResults.get(position).getCountryName());
-                if (allCountriesResults.get(position).getCountryName().contains("Germany")) {
-                    countryProgressBar.setVisibility(View.VISIBLE);
-                    new Thread(new Runnable() {
-                        @Override
-                        public void run() {
-                            try {
-                                germanDoc = null; // Fetches the HTML document
-                                germanResults = "";
-                                germanDoc = Jsoup.connect("https://www.rki.de/DE/Content/InfAZ/N/Neuartiges_Coronavirus/Fallzahlen.html").timeout(10000).get();
-                                germanTable = germanDoc.select("table").get(0);
-                                germanRows = germanTable.select("tbody").select("tr");
-                                rowIterator = germanRows.iterator();
-                                runOnUiThread(new Runnable() {
-
-                                    @Override
-                                    public void run() {
-                                        while (rowIterator.hasNext()) {
-                                            row = rowIterator.next();
-                                            cols = row.select("td");
-                                            if (cols.get(0).text().contains("Gesamt")) {
-                                                break;
-                                            }
-                                            germanResults = germanResults + cols.get(0).text() + " : " + cols.get(1).text().split("\\s")[0] + "\n";
-                                            //Log.e("TABLE: ", cols.get(0).text() + " : " + cols.get(1).text().split("\\s")[0]);
-                                        }
-                                        new AlertDialog.Builder(MainActivity.this)
-                                                .setTitle("Confirmed Cases in Germany")
-                                                .setCancelable(true)
-                                                .setMessage("Robert Koch Institut www.rki.de\n\n" +
-                                                        germanResults)
-                                                .setPositiveButton("Close", null)
-                                                .setIcon(R.drawable.ic_info)
-                                                .show();
-                                    }
-                                });
-                            } catch (Exception ex) {
-                                ex.printStackTrace();
-                                runOnUiThread(new Runnable() {
-
-                                    @Override
-                                    public void run() {
-                                        Toast.makeText(MainActivity.this, "Network Connection Error!",
-                                                Toast.LENGTH_LONG).show();
-                                    }
-                                });
-                            } finally {
-                                doc = null;
-                            }
-                            runOnUiThread(new Runnable() {
-                                @Override
-                                public void run() {
-                                    countryProgressBar.setVisibility(View.GONE);
-                                }
-                            });
-                        }
-                    }).start();
-                }
-            }
-        });//*/
-
-        // fetch previously saved data in SharedPreferences, if any
-        if (preferences.getString("textViewCases", null) != null) {
-            textViewCases.setText(preferences.getString("textViewCases", null));
-            textViewRecovered.setText(preferences.getString("textViewRecovered", null));
-            textViewDeaths.setText(preferences.getString("textViewDeaths", null));
-            textViewDate.setText(preferences.getString("textViewDate", null));
-            textViewActive.setText(preferences.getString("textViewActive", null));
-            //calculate_percentages();
+        vwPager = findViewById(R.id.vwPager);
+        tbLyData = findViewById(R.id.tbLyData);
+        createViewPagerAdapter();
+        if(preferences.getString(getString(R.string.txtFragmentSelectedTitle),null) != null)
+            currentCountrySelected = preferences.getString(getString(R.string.txtFragmentSelectedTitle),null);
+        else {
+            editor.putString(getString(R.string.txtFragmentSelectedTitle), currentCountrySelected);
+            editor.apply();
         }
+    }
 
-        /*
-        // Add Text Change Listener to textSearchBox to filter by Country
-        textSearchBox.addTextChangedListener(new TextWatcher() {
+    private void createViewPagerAdapter() {
+        vwPagAdapter = new ViewPagerAdapter(this);
+        fNow = new NowFragment();
+        vwPagAdapter.addFragment(fNow, getString(R.string.txtFragmentTitleNow));
+        fYesterday = new YesterdayFragment();
+        vwPagAdapter.addFragment(fYesterday, getString(R.string.txtFragmentTitleYesterday));
+        fYourCountry = new YourCountryFragment();
+        vwPagAdapter.addFragment(fYourCountry, getString(R.string.txtFragmentTitleCountry));
+        vwPager.setAdapter(vwPagAdapter);
 
-            @Override
-            public void onTextChanged(CharSequence searchSequence, int start, int before, int count) {
-                FilteredArrList = new ArrayList<CountryLine>();
-                if (searchSequence == null || searchSequence.length() == 0) {
-                    // back to original
-                    setListViewCountries(allCountriesResults);
-                } else {
-                    searchSequence = searchSequence.toString().toLowerCase();
-                    for (int i = 0; i < allCountriesResults.size(); i++) {
-                        String data = allCountriesResults.get(i).countryName;
-                        if (data.toLowerCase().startsWith(searchSequence.toString())) {
-                            FilteredArrList.add(new CountryLine(
-                                    allCountriesResults.get(i).countryName,
-                                    allCountriesResults.get(i).cases,
-                                    allCountriesResults.get(i).newCases,
-                                    allCountriesResults.get(i).recovered,
-                                    allCountriesResults.get(i).deaths,
-                                    allCountriesResults.get(i).newDeaths));
-                        }
-                    }
-                    // set the Filtered result to return
-                    setListViewCountries(FilteredArrList);
-                }
-            }
-
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-            }
-        });//*/
-
-        /*
-        // Hide keyboard after hitting done button
-        textSearchBox.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-
-            @Override
-            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                if (actionId == EditorInfo.IME_ACTION_DONE) {
-                    // do something, e.g. set your TextView here via .setText()
-                    inputMethodManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-                    inputMethodManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
-                    textSearchBox.clearFocus();
-                    return true;
-                }
-                return false;
-            }
-        });//*/
-
-        InputFilter filter = new InputFilter() {
-            public CharSequence filter(CharSequence source, int start, int end, Spanned dest, int dstart, int dend) {
-                String filtered = "";
-                for (int i = start; i < end; i++) {
-                    char character = source.charAt(i);
-                    if (!Character.isWhitespace(character)) {
-                        filtered += character;
+        new TabLayoutMediator(tbLyData, vwPager,
+                new TabLayoutMediator.TabConfigurationStrategy() {
+                    @Override
+                    public void onConfigureTab(@NonNull TabLayout.Tab tab, int position) {
+                        tab.setText(vwPagAdapter.getTitleList().get(position));
                     }
                 }
+        ).attach();
 
-                return filtered;
-            }
-
-        };
-
-        //textSearchBox.setFilters(new InputFilter[]{filter});
-        //textSearchBox.clearFocus();
-        // Call refreshData once the app is opened only one time, then user can request updates
-        refreshData();
     }
 
     public void goToActSettings(/*View vw*/) {
@@ -487,7 +328,6 @@ public class MainActivity extends AppCompatActivity {
         String[] strArrSymptoms = loadSymptoms();
         intCovid19Symptom.putExtra("symptomsList", strArrSymptoms);
         startActivityForResult(intCovid19Symptom, RETURN_CODE_SYMPTOMS);
-        //startActivity(intCovid19Symptom);
     }
 
     public void goToActFacts(View vw) {
@@ -507,8 +347,6 @@ public class MainActivity extends AppCompatActivity {
         Intent intHowToStop = new Intent(this, HowToStop.class);
         intHowToStop.putExtra("howToStopList", strArrHowToStop);
         startActivityForResult(intHowToStop, RETURN_CODE_HOW_TO_STOP);
-        //startActivity(intHowToStop);
-        //*/
     }
 
     public void goToActRoutesList(View vw) {
@@ -523,7 +361,6 @@ public class MainActivity extends AppCompatActivity {
         String[] strArrWhatToDo = loadWhatToDo();
         intWhatToDo.putExtra("whatToDoList", strArrWhatToDo);
         startActivityForResult(intWhatToDo, RETURN_CODE_WHAT_TO_DO);
-        //startActivity(intWhatToDo);
     }
 
     public void goToActMedia(View vw) {
@@ -976,9 +813,9 @@ public class MainActivity extends AppCompatActivity {
             File[] externalStorageVolumes = ContextCompat.getExternalFilesDirs(getApplicationContext(), null);
             File ruta_sd = externalStorageVolumes[0];
             File localDir = new File(ruta_sd, "COVID19Helper");
-            boolean rslt = localDir.mkdirs();
+            localDir.mkdirs();
             localDir = new File(ruta_sd + "/COVID19Helper", "MyDailyReports");
-            rslt = localDir.mkdirs();
+            localDir.mkdirs();
         }
     }
 
@@ -1134,12 +971,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private boolean createRequiredDirectory() throws IOException {
-        /*
-        File localDir = new File(getApplicationContext().getExternalFilesDir(
-                null), "/COVID19Helper");
-        if (localDir == null || !localDir.mkdirs()) {
-            Log.e("LOG_TAG", "Directory not created");
-        }//*/
 
         File[] externalStorageVolumes = ContextCompat.getExternalFilesDirs(getApplicationContext(), null);
         File ruta_sd = externalStorageVolumes[0];
@@ -1150,7 +981,7 @@ public class MainActivity extends AppCompatActivity {
         if(!localDir.exists())
             existCOVID19Dir = localDir.mkdirs();
         else existCOVID19Dir = true;
-        String s2 = getExternalFilesDir(null).getAbsolutePath();
+
         localDir = new File(localDir.getAbsolutePath() + "/COVID19Helper", "MyDailyReports");
         if(!localDir.exists())
             existDailyDir = localDir.mkdirs();
@@ -1238,7 +1069,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        //textSearchBox.clearFocus();
+        refreshData(true);
     }
 
     @Override
@@ -1274,7 +1105,7 @@ public class MainActivity extends AppCompatActivity {
                         .show();
                 return true;
             case R.id.action_refresh:
-                refreshData();
+                refreshData(true);
                 return true;
             case R.id.action_share:
                 sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
@@ -1294,147 +1125,189 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    void calculate_percentages () {
-        tmpNumber = Double.parseDouble(textViewRecovered.getText().toString().replaceAll(",", ""))
-                / Double.parseDouble(textViewCases.getText().toString().replaceAll(",", ""))
-                * 100;
-        textViewRecoveredTitle.setText(getResources().getString(R.string.textViewRecoveredTitle)  + "  " + generalDecimalFormat.format(tmpNumber) + "%");
-
-        tmpNumber = Double.parseDouble(textViewDeaths.getText().toString().replaceAll(",", ""))
-                / Double.parseDouble(textViewCases.getText().toString().replaceAll(",", ""))
-                * 100 ;
-        textViewDeathsTitle.setText(getResources().getString(R.string.textViewDeathsTitle) + "  " + generalDecimalFormat.format(tmpNumber) + "%");
-
-        tmpNumber = Double.parseDouble(textViewActive.getText().toString().replaceAll(",", ""))
-                / Double.parseDouble(textViewCases.getText().toString().replaceAll(",", ""))
-                * 100 ;
-        textViewActiveTitle.setText(getResources().getString(R.string.textViewActive) + "  " + generalDecimalFormat.format(tmpNumber) + "%");
-    }
-
-    void refreshData() {
+    public  void refreshData(boolean b) {
+        if(mySwipeRefreshLayout == null)
+            return;
+        caseData = null;
+        final boolean refresAll = b;
+        final CasesValues casesTmp = new CasesValues();
         mySwipeRefreshLayout.setRefreshing(true);
         new Thread(new Runnable(){
             @Override
             public void run() {
                 try {
+
                     doc = null; // Fetches the HTML document
                     doc = Jsoup.connect(url).timeout(10000).get();
-                    // table id main_table_countries
-                    countriesTable = doc.select("table").get(0);
-                    countriesRows = countriesTable.select("tr");
-                    //Log.e("TITLE", elementCases.text());
-                    runOnUiThread(new Runnable() {
 
-                        @Override
-                        public void run() {
-                            // get countries
-                            rowIterator = countriesRows.iterator();
-                            allCountriesResults = new ArrayList<CountryLine>();
+                    for(int n = 0; refresAll && n < 2; ++n){
+                        // table id main_table_countries
+                        final boolean now = n == 0;
+                        countriesTable = doc.select("table").get(n);
 
-                            // read table header and find correct column number for each category
-                            row = rowIterator.next();
-                            cols = row.select("th");
-                            //Log.e("COLS: ", cols.text());
-                            if (cols.get(0).text().contains("Country")) {
-                                for(int i=1; i < cols.size(); i++){
-                                    if (cols.get(i).text().contains("Total") && cols.get(i).text().contains("Cases"))
-                                    {colNumCases = i; Log.e("Cases: ", cols.get(i).text());}
-                                    else if (cols.get(i).text().contains("Total") && cols.get(i).text().contains("Recovered"))
-                                    {colNumRecovered = i; Log.e("Recovered: ", cols.get(i).text());}
-                                    else if (cols.get(i).text().contains("Total") && cols.get(i).text().contains("Deaths"))
-                                    {colNumDeaths = i; Log.e("Deaths: ", cols.get(i).text());}
-                                    else if (cols.get(i).text().contains("Active") && cols.get(i).text().contains("Cases"))
-                                    {colNumActive = i; Log.e("Active: ", cols.get(i).text());}
-                                    else if (cols.get(i).text().contains("New") && cols.get(i).text().contains("Cases"))
-                                    {colNumNewCases = i; Log.e("NewCases: ", cols.get(i).text());}
-                                    else if (cols.get(i).text().contains("New") && cols.get(i).text().contains("Deaths"))
-                                    {colNumNewDeaths = i; Log.e("NewDeaths: ", cols.get(i).text());}
-                                }
-                            }
+                        countriesRows = countriesTable.select("tr");
+                        //Log.e("TITLE", elementCases.text());
+                        runOnUiThread(new Runnable() {
 
-                            while (rowIterator.hasNext()) {
+                            @Override
+                            public void run() {
+                                // get countries
+                                rowIterator = countriesRows.iterator();
+                                ArrayList<CountryLine> allCountriesResults = new ArrayList<CountryLine>();
+                                casesTmp.getAllCountriesResults().add(allCountriesResults);
+                                // read table header and find correct column number for each category
                                 row = rowIterator.next();
-                                cols = row.select("td");
-
-                                if (cols.get(0).text().contains("World")) {
-                                    textViewCases.setText(cols.get(colNumCases).text());
-                                    textViewRecovered.setText(cols.get(colNumRecovered).text());
-                                    textViewDeaths.setText(cols.get(colNumDeaths).text());
-
-                                    if (cols.get(colNumActive).hasText()) {textViewActive.setText(cols.get(colNumActive).text());}
-                                    else {textViewActive.setText("0");}
-                                    if (cols.get(colNumNewCases).hasText()) {textViewNewCases.setText(cols.get(colNumNewCases).text());}
-                                    else {textViewNewCases.setText("0");}
-                                    if (cols.get(colNumNewDeaths).hasText()) {textViewNewDeaths.setText(cols.get(colNumNewDeaths).text());}
-                                    else {textViewNewDeaths.setText("0");}
-                                    continue;
-                                } else if (
-                                        cols.get(0).text().contains("Total") ||
-                                        cols.get(0).text().contains("Europe") ||
-                                        cols.get(0).text().contains("North America") ||
-                                        cols.get(0).text().contains("Asia") ||
-                                        cols.get(0).text().contains("South America") ||
-                                        cols.get(0).text().contains("Africa") ||
-                                        cols.get(0).text().contains("Oceania")
-                                        ) {
-                                    continue;
+                                cols = row.select("th");
+                                //Log.e("COLS: ", cols.text());
+                                if (cols.get(0).text().contains("Country")) {
+                                    for(int i=1; i < cols.size(); i++){
+                                        if (cols.get(i).text().contains("Total") && cols.get(i).text().contains("Cases"))
+                                        {colNumCases = i; Log.e("Cases: ", cols.get(i).text());}
+                                        else if (cols.get(i).text().contains("Total") && cols.get(i).text().contains("Recovered"))
+                                        {colNumRecovered = i; Log.e("Recovered: ", cols.get(i).text());}
+                                        else if (cols.get(i).text().contains("Total") && cols.get(i).text().contains("Deaths"))
+                                        {colNumDeaths = i; Log.e("Deaths: ", cols.get(i).text());}
+                                        else if (cols.get(i).text().contains("Active") && cols.get(i).text().contains("Cases"))
+                                        {colNumActive = i; Log.e("Active: ", cols.get(i).text());}
+                                        else if (cols.get(i).text().contains("New") && cols.get(i).text().contains("Cases"))
+                                        {colNumNewCases = i; Log.e("NewCases: ", cols.get(i).text());}
+                                        else if (cols.get(i).text().contains("New") && cols.get(i).text().contains("Deaths"))
+                                        {colNumNewDeaths = i; Log.e("NewDeaths: ", cols.get(i).text());}
+                                    }
                                 }
 
-                                if (cols.get(colNumCountry).hasText()) {tmpCountry = cols.get(0).text();}
-                                else {tmpCountry = "NA";}
+                                while (rowIterator.hasNext()) {
+                                    row = rowIterator.next();
+                                    cols = row.select("td");
 
-                                if (cols.get(colNumCases).hasText()) {tmpCases = cols.get(colNumCases).text();}
-                                else {tmpCases = "0";}
+                                    if (cols.get(0).text().contains("World")) {
+                                        String str = cols.get(colNumCases).text();
+                                        //textViewCases.setText(cols.get(colNumCases).text());
+                                        casesTmp.getTotalCases().add(cols.get(colNumCases).text());
 
-                                if (cols.get(colNumRecovered).hasText() ){
-                                    if(cols.get(colNumRecovered).text().equals("N/A") || cols.get(colNumRecovered).text().equals("NA"))
-                                        tmpRecovered = "0";
-                                    else
-                                        tmpRecovered = cols.get(colNumRecovered).text();
-                                    tmpPercentage = (generalDecimalFormat.format(Double.parseDouble(tmpRecovered.replaceAll(",", ""))
-                                            / Double.parseDouble(tmpCases.replaceAll(",", ""))
-                                            * 100)) + "%";
-                                    tmpRecovered = tmpRecovered + "\n" + tmpPercentage;
+                                        //textViewRecovered.setText(cols.get(colNumRecovered).text());
+                                        casesTmp.getTotalRecoveredCases().add(cols.get(colNumRecovered).text());
+
+                                        //textViewDeaths.setText(cols.get(colNumDeaths).text());
+                                        casesTmp.getTotalDeath().add(cols.get(colNumDeaths).text());
+
+                                        if (cols.get(colNumActive).hasText()) {
+                                            //textViewActive.setText(cols.get(colNumActive).text());
+                                            casesTmp.getTotalActiveCases().add(cols.get(colNumActive).text());
+                                        } else {
+                                            //textViewActive.setText("0");
+                                            casesTmp.getTotalActiveCases().add("0");
+                                        }
+
+                                        if (cols.get(colNumNewCases).hasText()) {
+                                            //textViewNewCases.setText(cols.get(colNumNewCases).text());
+                                            casesTmp.getTotalNewCases().add(cols.get(colNumNewCases).text());
+                                        } else {
+                                            //textViewNewCases.setText("0");
+                                            casesTmp.getTotalNewCases().add("0");
+                                        }
+
+                                        if (cols.get(colNumNewDeaths).hasText()) {
+                                            //textViewNewDeaths.setText(cols.get(colNumNewDeaths).text());
+                                            casesTmp.getTotalNewDeath().add(cols.get(colNumNewDeaths).text());
+                                        } else {
+                                            //textViewNewDeaths.setText("0");
+                                            casesTmp.getTotalNewDeath().add("0");
+                                        }
+                                        continue;
+
+                                    } else if (     cols.get(0).text().contains("Total") || cols.get(0).text().contains("Europe") ||
+                                                    cols.get(0).text().contains("North America") || cols.get(0).text().contains("Asia") ||
+                                                    cols.get(0).text().contains("South America") || cols.get(0).text().contains("Africa") ||
+                                                    cols.get(0).text().contains("Oceania")
+                                    ) {
+                                        continue;
+                                    }
+
+                                    if (cols.get(colNumCountry).hasText()) {tmpCountry = cols.get(0).text();}
+                                    else {tmpCountry = "NA";}
+
+                                    if (cols.get(colNumCases).hasText()) {tmpCases = cols.get(colNumCases).text();}
+                                    else {tmpCases = "0";}
+
+                                    if (cols.get(colNumRecovered).hasText() ){
+                                        if(cols.get(colNumRecovered).text().equals("N/A") || cols.get(colNumRecovered).text().equals("NA"))
+                                            tmpRecovered = "0";
+                                        else
+                                            tmpRecovered = cols.get(colNumRecovered).text();
+                                        tmpPercentage = (generalDecimalFormat.format(Double.parseDouble(tmpRecovered.replaceAll(",", ""))
+                                                / Double.parseDouble(tmpCases.replaceAll(",", ""))
+                                                * 100)) + "%";
+                                        tmpRecovered = tmpRecovered + "\n" + tmpPercentage;
+                                    }
+                                    else {tmpRecovered = "0";}
+
+                                    if(cols.get(colNumDeaths).hasText()) {
+                                        tmpDeaths = cols.get(colNumDeaths).text();
+                                        tmpPercentage = (generalDecimalFormat.format(Double.parseDouble(tmpDeaths.replaceAll(",", ""))
+                                                / Double.parseDouble(tmpCases.replaceAll(",", ""))
+                                                * 100)) + "%";
+                                        tmpDeaths = tmpDeaths + "\n" + tmpPercentage;
+                                    }
+                                    else {tmpDeaths = "0";}
+
+                                    if (cols.get(colNumNewCases).hasText()) {tmpNewCases = cols.get(colNumNewCases).text();}
+                                    else {tmpNewCases = "0";}
+
+                                    if (cols.get(colNumNewDeaths).hasText()) {tmpNewDeaths = cols.get(colNumNewDeaths).text();}
+                                    else {tmpNewDeaths = "0";}
+
+                                    allCountriesResults.add(new CountryLine(tmpCountry, tmpCases, tmpNewCases, tmpRecovered, tmpDeaths, tmpNewDeaths));
                                 }
-                                else {tmpRecovered = "0";}
 
-                                if(cols.get(colNumDeaths).hasText()) {
-                                    tmpDeaths = cols.get(colNumDeaths).text();
-                                    tmpPercentage = (generalDecimalFormat.format(Double.parseDouble(tmpDeaths.replaceAll(",", ""))
-                                            / Double.parseDouble(tmpCases.replaceAll(",", ""))
-                                            * 100)) + "%";
-                                    tmpDeaths = tmpDeaths + "\n" + tmpPercentage;
-                                }
-                                else {tmpDeaths = "0";}
+                                //setListViewCountries(allCountriesResults);
+                                //calculate_percentages();
+                                //textSearchBox.setText(null);
+                                //textSearchBox.clearFocus();
+                                myCalender = Calendar.getInstance();
+                                String lastUpdated = getString(R.string.txtLastUpdate);
+                                //textViewDate.setText(lastUpdated + myFormat.format(myCalender.getTime()));
+                                casesTmp.getAllDates().add(lastUpdated + myFormat.format(myCalender.getTime()));
 
-                                if (cols.get(colNumNewCases).hasText()) {tmpNewCases = cols.get(colNumNewCases).text();}
-                                else {tmpNewCases = "0";}
+                                // save results
+                                if(now){
+                                    editor.putString(getString(R.string.txtViewCasesPrefNow), casesTmp.getTotalCases(CasesValues.WORLD_CASES_NOW));
+                                    editor.putString(getString(R.string.txtViewRecoveredPrefNow), casesTmp.getTotalRecoveredCases(CasesValues.WORLD_CASES_NOW));
+                                    editor.putString(getString(R.string.txtViewActivePrefNow), casesTmp.getTotalActiveCases(CasesValues.WORLD_CASES_NOW));
+                                    editor.putString(getString(R.string.txtViewDeathsPrefNow), casesTmp.getTotalDeath(CasesValues.WORLD_CASES_NOW));
+                                    editor.putString(getString(R.string.txtViewDatePrefNow), casesTmp.getAllDates(CasesValues.WORLD_CASES_NOW));
+                                    editor.apply();
+                                }else {
+                                    editor.putString(getString(R.string.txtViewCasesPrefY), casesTmp.getTotalCases(CasesValues.WORLD_CASES_YESTERDAY));
+                                    editor.putString(getString(R.string.txtViewRecoveredPrefY), casesTmp.getTotalRecoveredCases(CasesValues.WORLD_CASES_YESTERDAY));
+                                    editor.putString(getString(R.string.txtViewActivePrefY), casesTmp.getTotalActiveCases(CasesValues.WORLD_CASES_YESTERDAY));
+                                    editor.putString(getString(R.string.txtViewDeathsPrefY), casesTmp.getTotalDeath(CasesValues.WORLD_CASES_YESTERDAY));
+                                    editor.putString(getString(R.string.txtViewDatePrefY), casesTmp.getAllDates(CasesValues.WORLD_CASES_YESTERDAY));
+                                    editor.apply();
+                                }//*/
 
-                                if (cols.get(colNumNewDeaths).hasText()) {tmpNewDeaths = cols.get(colNumNewDeaths).text();}
-                                else {tmpNewDeaths = "0";}
-
-                                allCountriesResults.add(new CountryLine(tmpCountry, tmpCases, tmpNewCases, tmpRecovered, tmpDeaths, tmpNewDeaths));
                             }
+                        });
+                        casesTmp.getUrlList().add(url);
+                    }///end of for n
 
-                            setListViewCountries(allCountriesResults);
-                            //textSearchBox.setText(null);
-                            //textSearchBox.clearFocus();
+                    //Now updating your country data
+                    Country ctrySelected = CountryFactory.getCountry(currentCountrySelected);
+                    ctrySelected.setCasesValues(casesTmp);
+                    ctrySelected.refreshData();
+                    if(casesTmp.hasYourCountryData())
+                    {
+                        editor.putString(getString(R.string.txtViewCasesPrefYC), casesTmp.getTotalCases(CasesValues.YOUR_COUNTRY_CASES_NOW));
+                        editor.putString(getString(R.string.txtViewRecoveredPrefYC), casesTmp.getTotalRecoveredCases(CasesValues.YOUR_COUNTRY_CASES_NOW));
+                        editor.putString(getString(R.string.txtViewActivePrefYC), casesTmp.getTotalActiveCases(CasesValues.YOUR_COUNTRY_CASES_NOW));
+                        editor.putString(getString(R.string.txtViewDeathsPrefYC), casesTmp.getTotalDeath(CasesValues.YOUR_COUNTRY_CASES_NOW));
+                        editor.putString(getString(R.string.txtViewDatePrefYC), casesTmp.getAllDates(CasesValues.YOUR_COUNTRY_CASES_NOW));
+                        editor.apply();
+                    }
 
-                            // save results
-                            editor.putString("textViewCases", textViewCases.getText().toString());
-                            editor.putString("textViewRecovered", textViewRecovered.getText().toString());
-                            editor.putString("textViewActive", textViewActive.getText().toString());
-                            editor.putString("textViewDeaths", textViewDeaths.getText().toString());
-                            editor.putString("textViewDate", textViewDate.getText().toString());
-                            editor.apply();
-
-                            calculate_percentages();
-
-                            myCalender = Calendar.getInstance();
-                            String lastUpdated = getString(R.string.txtLastUpdate);
-                            textViewDate.setText(lastUpdated + myFormat.format(myCalender.getTime()));
-                        }
-                    });
+                    casesTmp.setEmpty(false);
+                    caseData = casesTmp;
+                    casesViewModel.setCasesData(caseData);//*/
                 }
                 catch (Exception ex) {
                     ex.printStackTrace();
@@ -1460,5 +1333,108 @@ public class MainActivity extends AppCompatActivity {
                     }});
             }
         }).start();
+    }
+
+    @Override
+    public void onRefreshCasesDataNow() {
+        mySwipeRefreshLayout = fNow.getFragmentSwipeRefreshNow();
+        refreshData(true);
+    }
+
+    @Override
+    public void onRefreshCasesDataYesterday() {
+        mySwipeRefreshLayout = fYesterday.getFragmentSwipeRefreshY();
+        refreshData(true);
+    }
+
+    @Override
+    public void onRefreshCasesDataOfYourCountry() {
+        mySwipeRefreshLayout = fYourCountry.getFragmentSwipeRefreshYourCountry();
+        refreshData(true);
+    }
+
+    @Override
+    public void onClickCountryListViewItem(String itemClicked){
+
+        final String ctryName = itemClicked;
+
+        fYourCountry.setUpdated(false);
+        countryProgressBar = fNow.getCountryProgressBar();
+        countryProgressBar.setVisibility(View.VISIBLE);
+        mySwipeRefreshLayout = fYourCountry.getFragmentSwipeRefreshYourCountry();
+
+        countryProgressBar.setVisibility(View.GONE);
+        final Country ctrySelected = CountryFactory.getCountry(ctryName);
+        if(ctrySelected == null)
+            return;
+        currentCountrySelected = ctryName;
+        //refreshData(false);
+        //*****************************************************
+
+        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+        StrictMode.setThreadPolicy(policy);
+        mySwipeRefreshLayout.setRefreshing(true);
+        final CasesValues casesTmp = new CasesValues();
+        CasesValues.copyCaseValues(caseData, casesTmp);
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            try {
+                                if(ctrySelected == null){
+                                    return;
+                                }
+                                currentCountrySelected = ctryName;
+
+                                ctrySelected.setCasesValues(casesTmp);
+                                ctrySelected.refreshData();
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                            if(caseData.hasYourCountryData())
+                            {
+                                editor.putString(getString(R.string.txtViewCasesPrefYC), caseData.getTotalCases(CasesValues.YOUR_COUNTRY_CASES_NOW));
+                                editor.putString(getString(R.string.txtViewRecoveredPrefYC), caseData.getTotalRecoveredCases(CasesValues.YOUR_COUNTRY_CASES_NOW));
+                                editor.putString(getString(R.string.txtViewActivePrefYC), caseData.getTotalActiveCases(CasesValues.YOUR_COUNTRY_CASES_NOW));
+                                editor.putString(getString(R.string.txtViewDeathsPrefYC), caseData.getTotalDeath(CasesValues.YOUR_COUNTRY_CASES_NOW));
+                                editor.putString(getString(R.string.txtViewDatePrefYC), caseData.getAllDates(CasesValues.YOUR_COUNTRY_CASES_NOW));
+                                editor.putString(getString(R.string.txtFragmentSelectedTitle), currentCountrySelected);
+                                editor.apply();
+                            }
+                        }
+                    });
+                }
+                catch (Exception ex) {
+                    ex.printStackTrace();
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            Toast.makeText(MainActivity.this, "Network Connection Error!",
+                                    Toast.LENGTH_LONG).show();
+                        }
+                    });
+                }
+                finally {
+                    //doc = null;
+                }
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        mySwipeRefreshLayout.setRefreshing(false);
+                        countryProgressBar.setVisibility(View.GONE);
+                    }});
+            }
+        }).start();
+        //*****************************************************
+
+        casesTmp.setEmpty(false);
+        caseData = casesTmp;
+        casesViewModel.setCasesData(caseData);
+
+        vwPager.setCurrentItem(2);
+
     }
 }
