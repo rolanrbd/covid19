@@ -53,6 +53,8 @@ public class Cuba extends Country {
                 reader.skipValue();reader.skipValue();
                 //ignoring notes fild
                 reader.skipValue();reader.skipValue();
+                //ignoring numero-reproductivo object fild
+                reader.skipValue();reader.skipValue();
                 //ignoring event object fild
                 reader.skipValue();reader.skipValue();
                 //ignoring isolation centers object fild
@@ -94,8 +96,10 @@ public class Cuba extends Country {
                                                     jtoken = reader.peek();
                                                     reader.beginArray();
                                                     while (jtoken != JsonToken.END_ARRAY){
-                                                        deathByState.add(reader.nextString());
                                                         jtoken = reader.peek();
+                                                        if(jtoken == JsonToken.END_ARRAY)
+                                                            break;
+                                                        deathByState.add(reader.nextString());
                                                     }
                                                     reader.endArray();
                                                 }
@@ -152,7 +156,6 @@ public class Cuba extends Country {
                                                         patientList.add(patient);
                                                         jtoken = reader.peek();
                                                     }
-
                                                     reader.endArray();
                                                 }
                                                     break;
